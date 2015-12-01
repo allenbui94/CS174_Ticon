@@ -8,5 +8,9 @@ Group members:
 * Josh Zheng ([jozheng3](https://github.com/jozheng3))
 * Edwin Tseng ([etsan](https://github.com/etsan))
 
+## Templates
+We shamelessly grabbed lots of stuff online. Thanks to:
+* Start Bootstrap
+
 ## Some more stuff here
 ...when we get the time.
