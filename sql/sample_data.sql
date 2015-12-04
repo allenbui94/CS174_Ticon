@@ -33,11 +33,11 @@ join orderedItems on orderedItems.orderID=orderInfo.orderID
 join product on product.productID=orderedItems.productID;
 /* output
 OrderID|CustomerID|Product|ProductID
-88888888|111111111|Butt Boxers|7777777                                                                                                                                                                                            
-88888888|111111111|Butt Boxers Mk2|7777778                                                                                                                                                                                        
-88888888|111111111|Butt Boxers Mk2|7777778                                                                                                                                                                                        
-99999999|123456789|Butt Boxers|7777777                                                                                                                                                                                            
-99999999|123456789|Butt Boxers|7777777 
+88888888|111111111|Butt Boxers|7777777
+88888888|111111111|Butt Boxers Mk2|7777778
+88888888|111111111|Butt Boxers Mk2|7777778
+99999999|123456789|Butt Boxers|7777777
+99999999|123456789|Butt Boxers|7777777
 */
 ​
 /* Get only order #88888888's information */
@@ -47,11 +47,10 @@ join orderedItems on orderedItems.orderID=orderInfo.orderID and orderedItems.ord
 join product on product.productID=orderedItems.productID;
 /* output
 OrderID|CustomerID|Product|ProductID
-88888888|111111111|Butt Boxers|7777777                                                                                                                                                                                            
-88888888|111111111|Butt Boxers Mk2|7777778                                                                                                                                                                                        
+88888888|111111111|Butt Boxers|7777777
+88888888|111111111|Butt Boxers Mk2|7777778
 88888888|111111111|Butt Boxers Mk2|7777778
 */
-      
 /* Get all of Hello World's orders */
 select customer.firstName, customer.lastName, customer.ID, customer.email, product.name
 from customer
@@ -60,6 +59,6 @@ join orderedItems on orderedItems.orderID=orderInfo.orderID
 join product on product.productID=orderedItems.productID;
 /* output
 First|Last|CustomerID|email|Product
-Hello|World|111111111|helloworld@sjsu.edu|Butt Boxers                                                                                                                                                                             
-Hello|World|111111111|helloworld@sjsu.edu|Butt Boxers 
+Hello|World|111111111|helloworld@sjsu.edu|Butt Boxers
+Hello|World|111111111|helloworld@sjsu.edu|Butt Boxers
 */
