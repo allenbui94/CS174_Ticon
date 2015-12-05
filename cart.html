@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-​
+​ ​
 
 <head>
     <meta charset="utf-8">
@@ -23,7 +23,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-​
+​ ​
 
 <body>
     <!-- Navigation -->
@@ -128,7 +128,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
     var cost = 0;
-
+    var oldShippingCost = 0
+    var tax = 0;
     $(document).ready(function() {
         // do a query to retrieve all the productIDs, etc from this user's cart and store them into arrays
         // Example of a cart with stuff in it after doing a query. Something like
@@ -144,36 +145,47 @@
 
     function createProductTable(productIDs, prices, names, categories, tagSpecifics) {
         var html = ""; // we append all our html stuff into here
-        cost = 0;
-        // creates a productTable for every item in the cart
+        cost = 0; // creates a productTable for every item in the cart
         for (i = 0; i < productIDs.length; i++) {
-            html += '<table class="table"><thead><tr><th colspan="2" style="width:30%;">' + names[i] + '</th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="' + 'clothing_pics/' + productIDs[i] + '.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>' + '0985175' + '</td></tr><tr><td>Category:</td><td>' + categories[i] + '</td></tr><td>Product ID:</td><td>' + tagSpecifics[i] + '</table></td><td>' + '$' + prices[i] + '<br><div class="caption"><p><a href="">Remove from cart</a></div></td></tr></tbody></table><br>';
-
+            html += '<div class = "' +
+                productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;"><center>' + names[i] + '</center></th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="' + 'clothing_pics/' + productIDs[i] + '.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>' + '0985175' + '</td></tr><tr><td>Category:</td><td>' + categories[i] + '</td></tr><td>Product ID:</td><td>' + tagSpecifics[i] + '</table></td><td>' + '$' + prices[i] + '<br><div class="caption"><p><a href="#/" onclick="removeCartEntry(' + productIDs[i] + ',' + prices[i] + ');">Remove from cart</a></div></td></tr></tbody></table><br></div>';
             cost = cost + prices[i];
         }
         $('#productTable').html(html);
         $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
-
-
     }
 
     function calculateTotals(element) {
         //FOR REMOVE CART ---> subtract from COST here... 
-        var tax = cost * .07;
-        //CHANGE FOR SHIPPING 
+        tax = cost * .07;
+
         var shippingCost = 0;
         var sNum = element.value;
         if (sNum == 1) {
             shippingCost = 5.95;
+            oldShippingCost = 5.95;
         } else if (sNum == 2) {
             shippingCost = 6.95;
+            oldShippingCost = 6.95;
         }
         // add the cost of shipping by grabbing the value the user chose
         $('#shipping').html('$' + parseFloat(shippingCost));
-
         $('#cartTax').html('$' + parseFloat(Math.round(tax * 100) / 100).toFixed(2));
         $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + shippingCost) * 100) / 100).toFixed(2));
+    }
 
+    function removeCartEntry(productID, price) {
+        var divID = "\.";
+
+        divID += productID;
+        $(divID).remove();
+        cost -= price;
+        $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
+
+        $('#cartTax').html('$' + parseFloat(Math.round(tax * 100) / 100).toFixed(2));
+        $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + oldShippingCost) * 100) / 100).toFixed(2));
+
+        // make sure to delete the entry from the database as well
     }
     </script>
 </body>
