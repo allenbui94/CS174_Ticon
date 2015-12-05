@@ -55,6 +55,6 @@ create table warehouse
 (
 	productID int,
 	quantity int,
-	longitude long,
-	latitude long
+	longitude double,
+	latitude double
 );
