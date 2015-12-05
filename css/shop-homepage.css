@@ -56,7 +56,11 @@ body {
 
 .lead{ 
     font-family: 'Lobster', cursive;
+<<<<<<< HEAD
+    font-size: 55px;	
+=======
     font-size: 55px;    
+>>>>>>> refs/remotes/origin/master
 } 
 
 .lead2{ 

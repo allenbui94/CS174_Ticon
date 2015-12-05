@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Register</title>
+    <title>CheckOut</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts-->
@@ -67,79 +67,62 @@
     </nav>
     <!-- Page Content -->
     <div class="container">
-        <h2>Register</h2>
+        <h2>Enter Payment Information</h2>
         <hr>
         <form id="registerForm" method="POST">
-            <div class="form-group">
-                <div class="col-md-6">
-                    <label for="InputName">First Name</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" required>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="InputName">Name on Card</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cardName" placeholder="Enter Full Name" required>
+                        </div>
                     </div>
-                    <br>
-                    <label for="InputName">Username</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="username" placeholder="Enter Username" required>
-                    </div>
-                    <hr>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-6">
-                    <label for="InputName">Last Name</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" required>
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="InputName">Cardnumber</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cardNumber" placeholder="Enter Cardnumber" required>
+                        </div>
                     </div>
-                    <br>
-                    <label for="InputPassword">Enter Password</label>
-                    <div class="input-group">
-                        <input type="password" class="form-control" id="pwd" placeholder="Enter Password" required>
-                    </div>
-                    <hr>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <label for="InputEmail">Enter Phone Number:</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" required>
-                        <span class="input-group-addon"></span>
+            <!--row-->
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-xs-4">
+                        <label for="InputName">CVC</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="cvc" placeholder="ex 31" required>
+                        </div>
                     </div>
-                    <br>
+                    <div class="col-xs-4">
+                        <label for="InputName">Expiration</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="month" placeholder="MM" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <label for="InputName"></label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="month" placeholder="YYYY" required>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <label for="InputEmail">Enter Email</label>
-                    <div class="input-group">
-                        <input type="email" class="form-control" id="email" placeholder="Enter Email" required>
-                        <span class="input-group-addon"></span>
+            <!--row-->
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" name="submit" id="submit" value="PayNow" class="btn btn-success pull-right">
                     </div>
-                    <br>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <label for="InputStreetName">Address</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="street" placeholder="Enter Street Name and Number" required>
-                        <span class="input-group-addon"></span>
-                    </div>
-                    <br>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <label for="InputCity">City</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="city" placeholder="Enter City" required>
-                        <span class="input-group-addon"></span>
-                    </div>
-                    <br>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-success pull-right">
             </div>
         </form>
     </div>
@@ -162,8 +145,4 @@
     <script src="js/bootstrap.min.js"></script>
 </body>
 
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> refs/remotes/origin/master
