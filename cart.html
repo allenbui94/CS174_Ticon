@@ -177,10 +177,14 @@
         } else if (sNum == 2) {
             shippingCost = 6.95;
             oldShippingCost = 6.95;
-        }
+        }else if(sNum == 3){ 
+	    shippingCost = 0; 
+	    oldShippingCost = 0; 
+	}
+	
         // add the cost of shipping by grabbing the value the user chose
         $('#shipping').html('$' + parseFloat(shippingCost));
-        $('#cartTax').html('$' + parseFloat(Math.round(tax * 100) / 100).toFixed(2));
+        $('#cartTax').html('$' + parseFloat(Math.round((shippingCost + tax) * 100) / 100).toFixed(2));
         $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + shippingCost) * 100) / 100).toFixed(2));
     }
 
@@ -190,8 +194,9 @@
         divID += productID;
         $(divID).remove();
         cost -= price;
+	tax = cost * .07;
         $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
-        $('#cartTax').html('$' + parseFloat(Math.round(tax * 100) / 100).toFixed(2));
+        $('#cartTax').html('$' + parseFloat(Math.round((oldShippingCost + tax) * 100) / 100).toFixed(2));
         $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + oldShippingCost) * 100) / 100).toFixed(2));
 
         // make sure to delete the entry from the database as well
