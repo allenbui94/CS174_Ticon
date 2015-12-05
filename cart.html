@@ -147,8 +147,22 @@
         var html = ""; // we append all our html stuff into here
         cost = 0; // creates a productTable for every item in the cart
         for (i = 0; i < productIDs.length; i++) {
+<<<<<<< HEAD
             html += '<div class = "' +
                 productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;"><center>' + names[i] + '</center></th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="' + 'clothing_pics/' + productIDs[i] + '.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>' + '0985175' + '</td></tr><tr><td>Category:</td><td>' + categories[i] + '</td></tr><td>Product ID:</td><td>' + tagSpecifics[i] + '</table></td><td>' + '$' + prices[i] + '<br><div class="caption"><p><a href="#/" onclick="removeCartEntry(' + productIDs[i] + ',' + prices[i] + ');">Remove from cart</a></div></td></tr></tbody></table><br></div>';
+=======
+           html += '<div class = "' + 
+		productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;"><center>'
+		+ names[i]
+		+ '</center></th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="'
+		+ 'clothing_pics/'+ productIDs[i]+'.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>'
+		+ '0985175' + '</td></tr><tr><td>Category:</td><td>' 
+		+ categories[i] + '</td></tr><td>Product ID:</td><td>'
+		+ tagSpecifics[i] + '</table></td><td>'
+		+ '$' + prices[i] + '<br><div class="caption"><p><a href="#/" onclick="removeCartEntry(' 
+		+ productIDs[i] +',' + prices[i] + ');">Remove from cart</a></div></td></tr></tbody></table><br></div>';
+
+>>>>>>> origin/master
             cost = cost + prices[i];
         }
         $('#productTable').html(html);
@@ -187,6 +201,17 @@
 
         // make sure to delete the entry from the database as well
     }
+	
+function removeCartEntry(productID, price){
+	var divID = "\.";
+	
+	divID += productID;
+	$(divID).remove();
+	cost -= price;
+	$('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
+	
+	// make sure to delete the entry from the database as well
+}
     </script>
 </body>
 
