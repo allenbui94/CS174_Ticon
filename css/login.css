@@ -8,30 +8,18 @@ body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-.thumbnail img {
-    width: 100%;
+.newCustomers{ 
+    margin: -20px 50px;
+    background-color:#f3f2f2;
+    padding: 40px;
+    border-left: 2px solid #003f80;
+
 }
 
-.ratings {
-    padding-right: 10px;
-    padding-left: 10px;
-    color: #d17581;
-}
+.btn btn-primary{ 
+    color:#003f80;
 
-.thumbnail {
-    padding: 0;
-}
-
-.thumbnail .caption-full {
-    padding: 9px;
-    color: #333;
-}
-
-.list-group-item-info{ 
-    color:#003d66;
-    background-color:#f2f2f2; 
-}
-
+} 
 
 footer {
     margin: 50px 0;
