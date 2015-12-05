@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 ​
 
@@ -67,49 +67,47 @@
         </div>
         <!-- /.container -->
     </nav>
-    <div class ="container">
+    <div class="container">
         <h2>Shopping Bag</h2>
-	<hr>
-	<br>
+        <hr>
+        <br>
     </div>
     <!-- Page Content -->
     <div id="productTable" class="container">
-        
     </div>
     ​
     <hr>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6"><b>Subtotal:</b></div>
-        <div id="cartSubTotal" class="col-md-6"></div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-           <select id="shippingOtions" class="form-control" style="width:60%;" onchange="">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"><b>Subtotal:</b></div>
+            <div id="cartSubTotal" class="col-md-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <select id="shippingOtions" class="form-control" style="width:60%;" onchange="calculateTotals(this);">
                     <option selected disabled>Shipping Type</option>
                     <option value="1">2 Day Express</option>
                     <option value="2">5 Day Standard</option>
                     <option value="3">Free</option>
                 </select>
-            <!--dropdown-->
+                <!--dropdown-->
+            </div>
+            <!-- col-->
+            <div id="shipping" class="col-md-6"></div>
         </div>
-        <!-- col-->
-        <div id ="shipping" class="col-md-6"></div>
-    </div>
-    <!--row-->
-    <br />
-    <div class="row">
-        <div class="col-md-6"><b>With Shipping & Tax:</b></div>
-        <div id="cartTax" class="col-md-6"></div>
-
-        <div class="col-md-6"><b>Total:</b></div>
-        <div id="cartTotal" class="col-md-6"></div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <button class="btn pull-right btn-success" type="button" onclick="location.href='checkout.html';">Checkout</button>
+        <!--row-->
+        <br />
+        <div class="row">
+            <div class="col-md-6"><b>With Shipping & Tax:</b></div>
+            <div id="cartTax" class="col-md-6"></div>
+            <div class="col-md-6"><b>Total:</b></div>
+            <div id="cartTotal" class="col-md-6"></div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn pull-right btn-success" type="button" onclick="location.href='checkout.html';">Checkout</button>
+            </div>
+        </div>
     </div>
     <!-- /.container -->
     <div class="container">
@@ -129,6 +127,8 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
+    var cost = 0;
+
     $(document).ready(function() {
         // do a query to retrieve all the productIDs, etc from this user's cart and store them into arrays
         // Example of a cart with stuff in it after doing a query. Something like
@@ -144,36 +144,37 @@
 
     function createProductTable(productIDs, prices, names, categories, tagSpecifics) {
         var html = ""; // we append all our html stuff into here
-        var cost = 0;
+        cost = 0;
         // creates a productTable for every item in the cart
         for (i = 0; i < productIDs.length; i++) {
             html += '<table class="table"><thead><tr><th colspan="2" style="width:30%;">' + names[i] + '</th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="' + 'clothing_pics/' + productIDs[i] + '.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>' + '0985175' + '</td></tr><tr><td>Category:</td><td>' + categories[i] + '</td></tr><td>Product ID:</td><td>' + tagSpecifics[i] + '</table></td><td>' + '$' + prices[i] + '<br><div class="caption"><p><a href="">Remove from cart</a></div></td></tr></tbody></table><br>';
 
             cost = cost + prices[i];
         }
-	
-	
-        var tax = cost * .07;
-//CHANGE FOR SHIPPING 
-	var shippingCost = 0; 
-	var sNum = 1; 
-	$("#shippingOptions").change(function () {
-        sNum = this.value;
-    });
-	if(sNum ==1){ shippingCost = 5.95;} else if(sNum==2){shippingCost=6.95;}
-       // add the cost of shipping by grabbing the value the user chose
-	$('#shipping').html('$'+ parseFloat(shippingCost));
-
         $('#productTable').html(html);
         $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
+
+
+    }
+
+    function calculateTotals(element) {
+        //FOR REMOVE CART ---> subtract from COST here... 
+        var tax = cost * .07;
+        //CHANGE FOR SHIPPING 
+        var shippingCost = 0;
+        var sNum = element.value;
+        if (sNum == 1) {
+            shippingCost = 5.95;
+        } else if (sNum == 2) {
+            shippingCost = 6.95;
+        }
+        // add the cost of shipping by grabbing the value the user chose
+        $('#shipping').html('$' + parseFloat(shippingCost));
+
         $('#cartTax').html('$' + parseFloat(Math.round(tax * 100) / 100).toFixed(2));
         $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + shippingCost) * 100) / 100).toFixed(2));
+
     }
-   
-    	    
-
-
-
     </script>
 </body>
 
