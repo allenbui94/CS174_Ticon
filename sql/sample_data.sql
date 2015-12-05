@@ -1,9 +1,9 @@
 /* Creates a pair of Butt Boxers (ID 7777777) and stores 500 of them into a warehouse. */
-insert into product values(7777777, "Butt Boxers", 195.95, "Signature Butt Brand underpants", "Underwear", "Men's", 2);
+insert into product values(7777777, "Butt Boxers", 195.95, "Signature Butt Brand underpants", "Underwear", "Men's");
 insert into warehouse values(7777777, 500, 32.555555, -122.1231214214);
 ​
 /* Creates a pair of Butt Boxers Mk2 (ID 7777778) and stores 55 of them into a warehouse. */
-insert into product values(7777778, "Butt Boxers Mk2", 2999.99, "Signature Butt Brand underpants mk2", "Underwear", "Men's", 2);
+insert into product values(7777778, "Butt Boxers Mk2", 2999.99, "Signature Butt Brand underpants mk2", "Underwear", "Men's");
 insert into warehouse values(7777778, 55, 32.555555, -122.1231214214);
 ​
 /* Creates a new customer account for Frank Butt, adds payment info */

@@ -1,12 +1,11 @@
-create table product
+﻿create table product
 (
 	productID int,
 	name varchar(64),
 	price double,
 	description varchar(255),
 	category varchar(32),
-	tagSpecific varchar(32),
-	itemSize int
+	tagSpecific varchar(32)
 );
 ​
 create table customer
