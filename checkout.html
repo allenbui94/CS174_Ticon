@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Shopping Cart</title>
+    <title>CheckOut</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <!-- Custom CSS -->
-    <link href="css/shop-cart.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
     <link href="css/shop-homepage.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,85 +67,66 @@
     </nav>
     <!-- Page Content -->
     <div class="container">
-        <h2>Shopping Bag</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th colspan="2" style="width:30%;">Product</th>
-                    <th style="40%;">Options</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="thumbnail">
-                            <img class="img-responsive" src="http://placehold.it/200x300" alt="">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="caption">
-                            <h3>Product Name</h3>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <a href="" >Remove</a>
-                        </div>
-                    </td>
-                    <td>
-                        <table class="table">
-                            <tr>
-                                <td>Product ID:</td>
-                                <td>0985175</td>
-                            </tr>
-                            <tr>
-                                <td>Size:</td>
-                                <td>Large</td>
-                            </tr>
-                            <tr>
-                                <td>Quantity:</td>
-                                <td>1</td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td> $24.00</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="container">
+        <h2>Enter Payment Information</h2>
         <hr>
-        <div class="row">
-            <div class="col-md-6"><b>Total before shipping:</b></div>
-            <div class="col-md-6">$24.00</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Shipping Type
-                        <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">2 Day Express</a></li>
-                        <li><a href="#">5 Day Standard</a></li>
-                        <li><a href="#">Free</a></li>
-                    </ul>
+        <form id="registerForm" method="POST">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="InputName">Name on Card</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cardName" placeholder="Enter Full Name" required>
+                        </div>
+                    </div>
                 </div>
-                <!--dropdown-->
             </div>
-            <!-- col-->
-            <div class="col-md-6">$5.99</div>
-        </div>
-        <!--row-->
-        <br />
-        <div class="row">
-            <div class="col-md-6"><b>Total with Shipping:</b></div>
-            <div class="col-md-6">$29.99</div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <button class="btn pull-right btn-success" type="button" onclick="location.href='checkout.html';">Checkout</button>
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="InputName">Cardnumber</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cardNumber" placeholder="Enter Cardnumber" required>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+            <!--row-->
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-xs-4">
+                        <label for="InputName">CVC</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="cvc" placeholder="ex 31" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <label for="InputName">Expiration</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="month" placeholder="MM" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <label for="InputName"></label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="month" placeholder="YYYY" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--row-->
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" name="submit" id="submit" value="PayNow" class="btn btn-success pull-right">
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <!-- /.container -->
+    <!---container-->
     <div class="container">
         <hr>
         <!-- Footer -->
