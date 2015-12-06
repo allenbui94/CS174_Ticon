@@ -112,7 +112,7 @@ session_start();
             <div class="col-md-6">
                 <div class="newCustomers">
                     <h4> New Customer?</h4>
-                    <a class="btn btn-primary" href="signup.html">Register!</a>
+                    <a class="btn btn-primary" href="signup.php">Register!</a>
                 </div>
             </div>
         </div>

@@ -265,6 +265,44 @@ session_start();
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+<<<<<<< HEAD:index.php
+=======
+	
+	<script type="text/javascript">
+    $(document).ready(function() {
+		// do a query to retrieve random productIDs and info and store them into arrays
+        // Example of selecting 6 random items
+        // "SELECT productID, name, price, description FROM product ORDER BY RAND() LIMIT 6;"
+        var productIDs = [1000000010, 1000000020, 1000000030, 1000000040, 1000000050, 1000000060];
+        var prices = [19.99, 159.99, 12.99, 48.99, 89.99, 29.99];
+        var names = ["John Ashford Long-Sleeve Herringbone Flannel Shirt", "London Fog Big & Tall Classic Car Coat", "St. John's Bay Long-Sleeve Solid Sueded Polo", "Levi's 514 Straight-Fit Jeans, Caraway Twill", "a.n.a Long-Sleeve Sweater Dress", "St. John's Bay Wool-Blend Pea Coat"];
+        var descriptions = ["A subtle herringbone pattern adds a textural feel to this button-down shirt from John Ashford.", "Brave the outdoors in this polished overcoat from Kenneth Cole Reaction, designed with a slim fit and knit collar.", "This polo's soft color and cushiony sueded fabric gives you an easy-going style that feels instantly worn in.", "When blue denim won't do, enhance any casual look with these twill jeans from Levi's.", "Our oversized sweater dress features textural knit details and a draped cowl neckline for a soft and cozy take on a new season essential.", "The warm fleece of our Columbia zip-front jacket keeps you cozy and comfortable during all your outdoor adventures."];
+        createProductTable(productIDs, prices, names, descriptions); // pass the array(s) containing all the productIDs from the cart
+	});
+	
+	/**
+	* Creates a box with information for an item
+	* @param {Array(int)} productIDs the productIDs
+	* @param {Array(double)} prices the cost of each item w/o tax
+	* @param {Array(String)} names the name of each item
+	* @param {Array(String)} descriptions a <255 character description of the item
+	*/
+	function createProductTable(productIDs, prices, names, descriptions){
+		var html = "";
+		
+		for(i = 0; i < productIDs.length; i++){
+			html += '<div class="col-sm-4 col-lg-4 col-md-4" style="width:30%;"><div class="thumbnail"><img src="clothing_pics/' +
+			productIDs[i] + '.jpg" alt=""><center><h4><a href="item.php?id=' + 
+			productIDs[i] + '">' + 
+			names[i] + '</a></h4><div class="caption"><h4>$' + 
+			prices[i] + '</h4>' +
+			descriptions[i] + '</p></div></div></div>';
+		}
+		 $('#productTable').html(html);
+	}
+	
+	</script>
+>>>>>>> origin/master:index.html
 </body>
 
 </html>
