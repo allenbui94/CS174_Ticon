@@ -107,7 +107,7 @@ header('Location:index.php');
                     <option selected disabled>Shipping Type</option>
                     <option value="1">2 Day Express</option>
                     <option value="2">5 Day Standard</option>
-                    <option value="3">Free</option>
+                    <option value="3">Free 7 Day</option>
                 </select>
                 <!--dropdown-->
             </div>
@@ -145,7 +145,9 @@ header('Location:index.php');
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+	
     <script type="text/javascript">
+	// runs this stuff on load
     var cost = 0;
     var oldShippingCost = 0
     var tax = 0;
@@ -162,19 +164,25 @@ header('Location:index.php');
         createProductTable(productIDs, prices, names, categories, tagSpecifics); // pass the array(s) containing all the productIDs from the cart
     });
 
+	/**
+	* Creates a box with information for each item in the cart
+	* @param {Array(int)} productIDs the productIDs
+	* @param {Array(double)} prices the cost of each item w/o tax
+	* @param {Array(String)} names the name of each item
+	* @param {Array(String)} categories what the item is (e.g. shirt)
+	* @param {Array(String)} tagSpecifics a bunch of tags (i.e. Men's/Women's)
+	*/
     function createProductTable(productIDs, prices, names, categories, tagSpecifics) {
         var html = ""; // we append all our html stuff into here
-        cost = 0; // creates a productTable for every item in the cart
-        for (i = 0; i < productIDs.length; i++) {
-            html += '<div class = "' +
-                productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;"><center>' + names[i] + '</center></th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="' + 'clothing_pics/' + productIDs[i] + '.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>' + '0985175' + '</td></tr><tr><td>Category:</td><td>' + categories[i] + '</td></tr><td>Product ID:</td><td>' + tagSpecifics[i] + '</table></td><td>' + '$' + prices[i] + '<br><div class="caption"><p><a href="#/" onclick="removeCartEntry(' + productIDs[i] + ',' + prices[i] + ');">Remove from cart</a></div></td></tr></tbody></table><br></div>';
-           html += '<div class = "' + 
+        cost = 0; 
+        for (i = 0; i < productIDs.length; i++) {    
+        html += '<div class = "' + 
 		productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;"><center>'
 		+ names[i]
 		+ '</center></th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="'
-		+ 'clothing_pics/'+ productIDs[i]+'.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>'
-		+ '0985175' + '</td></tr><tr><td>Category:</td><td>' 
-		+ categories[i] + '</td></tr><td>Product ID:</td><td>'
+		+ 'clothing_pics/'+ productIDs[i]+'.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID</td><td>'
+		+ productIDs[i] + '</td></tr><tr><td>Category</td><td>' 
+		+ categories[i] + '</td></tr><td>Tags</td><td>'
 		+ tagSpecifics[i] + '</table></td><td>'
 		+ '$' + prices[i] + '<br><div class="caption"><p><a href="#/" onclick="removeCartEntry(' 
 		+ productIDs[i] +',' + prices[i] + ');">Remove from cart</a></div></td></tr></tbody></table><br></div>';
@@ -184,6 +192,10 @@ header('Location:index.php');
         $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
     }
 
+	/**
+	* Shows the subtotal/shipping/tax/total
+	* @param element element the shipping speed the user selected
+	*/
     function calculateTotals(element) {
         //FOR REMOVE CART ---> subtract from COST here... 
         tax = cost * .07;
@@ -207,6 +219,11 @@ header('Location:index.php');
         $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + shippingCost) * 100) / 100).toFixed(2));
     }
 
+	/**
+	* Removes an item from the cart
+	* @param {int} productID the productID to remove from the cart
+	* @param {double} price the price we need to subtract from the user's total 
+	*/
     function removeCartEntry(productID, price) {
         var divID = "\.";
 
