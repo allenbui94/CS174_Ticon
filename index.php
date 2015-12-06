@@ -78,29 +78,24 @@ session_start();
         </div>
         <!-- /.container -->
     </nav>
-
-    <!-- Page Content -->
+ <!-- Page Content -->
     <div class="container">
         <div class="row">
             <div class="col-md-3">
                 <p class="lead">Ticon</p>
                 <div id="SideBar">
                     <div class="list-group panel">
-					<a href="#mens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Men's</a>
+                        <a href="#mens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Mens</a>
                         <div class="collapse" id="mens">
-                       <a href="results_list.php?category=Shirt&tagSpecific=Men's" class="list-group-item">Shirts</a>
-                            <a href="results_list.php?category=Pants&tagSpecific=Men's" class="list-group-item">Pants</a>
-                            <a href="results_list.php?category=Suit&tagSpecific=Men's" class="list-group-item">Suits</a>
-							<a href="results_list.php?category=Jacket&tagSpecific=Men's" class="list-group-item">Jackets</a>							
-                            <a href="results_list.php?category=Shoes&tagSpecific=Men's" class="list-group-item">Shoes</a>
+                            <a href="" class="list-group-item">Pants</a>
+                            <a href="" class="list-group-item">Shirts</a>
+                            <a href="" class="list-group-item">Shoes</a>
                         </div>
-                        <a href="#womens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Women's</a>
+                        <a href="#womens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Womens</a>
                         <div class="collapse" id="womens">
-                            <a href="results_list.php?category=Shoes&tagSpecific=Women's" class="list-group-item">Shoes</a>	
-							<a href="results_list.php?category=Pants&tagSpecific=Women's" class="list-group-item">Pants</a>	
-                            <a href="results_list.php?category=Dress&tagSpecific=Women's" class="list-group-item">Dresses</a>	
-							<a href="results_list.php?category=Sweater&tagSpecific=Women's" class="list-group-item">Sweaters</a>	
-							<a href="results_list.php?category=Jacket&tagSpecific=Women's" class="list-group-item">Jackets</a>	
+                            <a href="" class="list-group-item">Shirts</a>
+                            <a href="" class="list-group-item">Pants</a>
+                            <a href="" class="list-group-item">Dresses</a>
                         </div>
                     </div>
                 </div>
@@ -137,27 +132,8 @@ session_start();
                 </div>
                 <!--row-->
                 <div class="row">
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$24.99</h4>
-                                <h4><a href="#">First Product</a>
-                                </h4>
-                                <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">15 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="productTable" class="container">
+					<!--
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
                             <img src="http://placehold.it/320x150" alt="">
@@ -248,6 +224,8 @@ session_start();
                         <p>If you like this template, then check out <a target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this tutorial</a> on how to build a working review system for your online store!</p>
                         <a class="btn btn-primary" target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View Tutorial</a>
                     </div>
+					-->
+					</div>
                 </div>
             </div>
         </div>
@@ -269,7 +247,7 @@ session_start();
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
+	
 	<script type="text/javascript">
     $(document).ready(function() {
 		// do a query to retrieve random productIDs and info and store them into arrays
@@ -282,24 +260,19 @@ session_start();
         createProductTable(productIDs, prices, names, descriptions); // pass the array(s) containing all the productIDs from the cart
 	});
 	
-	/**
-	* Creates a box with information for an item
-	* @param {Array(int)} productIDs the productIDs
-	* @param {Array(double)} prices the cost of each item w/o tax
-	* @param {Array(String)} names the name of each item
-	* @param {Array(String)} descriptions a <255 character description of the item
-	*/
 	function createProductTable(productIDs, prices, names, descriptions){
+		//var html = '<div class="col-sm-4 col-lg-4 col-md-4" style="width:30%;"><div class="thumbnail"><img src="http://placehold.it/320x150" alt=""><div class="caption"><h4 class="pull-right">$24.99</h4><h4><a href="#">First Product</a></h4><p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp</a>. The quick brown fox jumped over the lazy dogs. The quick brown fox jumped over the lazy dogs. The quick brown fox jumped over the lazy dogs. The quick brown fox jumped over the lazy dogs.</p></div></div></div>';
 		var html = "";
 		
 		for(i = 0; i < productIDs.length; i++){
 			html += '<div class="col-sm-4 col-lg-4 col-md-4" style="width:30%;"><div class="thumbnail"><img src="clothing_pics/' +
-			productIDs[i] + '.jpg" alt=""><center><h4><a href="item.php?id=' + 
-			productIDs[i] + '">' + 
+			productIDs[i] + '.jpg" alt=""><center><h4><a href="#/">' + 
 			names[i] + '</a></h4><div class="caption"><h4>$' + 
 			prices[i] + '</h4>' +
 			descriptions[i] + '</p></div></div></div>';
 		}
+		
+		  
 		 $('#productTable').html(html);
 	}
 	
