@@ -1,13 +1,13 @@
 CREATE TABLE product(
-    productID int,
+    productID varchar(32),
     name varchar(64),
-    price double,
+    price varchar(32),
     description varchar(255),
     category varchar(32),
     tagSpecific varchar(32)
 );
 CREATE TABLE customer(
-    id int,
+    id varchar(32),
     firstName varchar(32),
     lastName varchar(32),
     street varchar(64),
@@ -20,7 +20,7 @@ CREATE TABLE customer(
     phoneNumber varchar(10)
 );
 CREATE TABLE payment(
-    customerID int,
+    customerID varchar(32),
     cardNumber varchar(32),
     securityCode varchar(32),
     expirationDate varchar(32),
@@ -28,27 +28,27 @@ CREATE TABLE payment(
     lastName varchar(32)
 );
 CREATE TABLE orderInfo(
-    orderID int,
-    customerID int,
-    itemCost double,
-    orderAmt int,
-    shippingType int,
-    shippingPrice double,
-    tax double,
+    orderID varchar(32),
+    customerID varchar(32),
+    itemCost varchar(32),
+    orderAmt varchar(32),
+    shippingType varchar(32),
+    shippingPrice varchar(32),
+    tax dvarchar(32),
     orderTime varchar(32)
 );
 CREATE TABLE orderedItems(
-    orderID int,
-    productID int
+    orderID varchar(32),
+    productID varchar(32)
 );
 CREATE TABLE warehouse(
-    productID int,
-    quantity int,
-    longitude double,
-    latitude double
+    productID varchar(32),
+    quantity varchar(32),
+    longitude varchar(32),
+    latitude varchar(32)
 );
 create table cart
 (
-	customerID int,
-	productID int
+	customerID varchar(32),
+	productID varchar(32)
 );
