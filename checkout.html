@@ -1,28 +1,3 @@
-<?php
-require 'php/connection.php';
-
-$id = "";
-$name = "Product Not Found";
-$price = "Unknown";
-$description = "Description Not Found";
-$category = "";
-$tagSpecific = "";
-
-if (isset($_GET['id'])) {
-    $query   = "SELECT * FROM product WHERE id = "+productID+";";
-    $results = db2_exec($_SESSION['connection'], $query);
-    //only one entry
-    while ($row = db2_fetch_object($results)) {
-        $id = $row->productID;
-        $name = $row->name;
-        $price = $row ->price;
-        $description = $row->description;
-        $category = $row->category;
-        $tagSpecific = $row->tagSpecific;
-    }
-}
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,13 +7,13 @@ if (isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><?=$name?> - Ticon</title>
+    <title>CheckOut</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <!-- Custom CSS -->
-    <link href="css/shop-item.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
     <link href="css/shop-homepage.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -92,47 +67,72 @@ if (isset($_GET['id'])) {
     </nav>
     <!-- Page Content -->
     <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <p class="lead">Ticon</p>
-                <div id="SideBar">
-                    <div class="list-group panel">
-                        <a href="#mens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Mens</a>
-                        <div class="collapse" id="mens">
-                            <a href="" class="list-group-item">Pants</a>
-                            <a href="" class="list-group-item">Shirts</a>
-                            <a href="" class="list-group-item">Shoes</a>
-                        </div>
-                        <a href="#womens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Womens</a>
-                        <div class="collapse" id="womens">
-                            <a href="" class="list-group-item">Shirts</a>
-                            <a href="" class="list-group-item">Pants</a>
-                            <a href="" class="list-group-item">Dresses</a>
+        <h2>Enter Payment Information</h2>
+        <hr>
+        <form id="registerForm" method="POST">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="InputName">Name on Card</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cardName" placeholder="Enter Full Name" required>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--col-->
-            <div class="col-md-9">
-                <div class="thumbnail">
-                    <img class="img-responsive" src="clothing pics/<?=$id?>.jpg" alt="">
-                    <div class="caption-full">
-                        <h4 class="pull-right"><?=$price?></h4>
-                        <h4><a href="#"><?=$name?></a></h4>
-                        <p><?=$description?></p>
-                        <p></p>
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="InputName">Cardnumber</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cardNumber" placeholder="Enter Cardnumber" required>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <!--row-->
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-xs-4">
+                        <label for="InputName">CVC</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="cvc" placeholder="ex 31" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <label for="InputName">Expiration</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="month" placeholder="MM" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <label for="InputName"></label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="month" placeholder="YYYY" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--row-->
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" name="submit" id="submit" value="PayNow" class="btn btn-success pull-right">
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <!-- /.container -->
+    <!---container-->
     <div class="container">
         <hr>
         <!-- Footer -->
         <footer>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-6">
                     <p>Copyright &copy; Ticon 2015</p>
                 </div>
             </div>

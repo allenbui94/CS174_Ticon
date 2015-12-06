@@ -1,13 +1,4 @@
-﻿<?php
-
-session_start(); 
-if(!isset($_SESSION['CurrentUser'])){
-header('Location:index.php');
-} 
-
-?>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 ​ ​
 
@@ -35,20 +26,18 @@ header('Location:index.php');
 ​ ​
 
 <body>
-
-
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+            <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand lead2" href="index.php"> T </a>
+                <a class="navbar-brand lead2" href="index.html"> T </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -64,28 +53,20 @@ header('Location:index.php');
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
-		
-		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
                     <li>
-                        <a href="login.php">Login/SignUp</a>
-                    </li> <?php } ?>
-		<?php if(isset($_SESSION['CurrentUser'])){?>
-		    <li>
-                        <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
+                        <a href="login.html">Login/SignUp</a>
                     </li>
-                    <li> 
-                        <a href="cart.php">
+                    <li>
+                        <a href="cart.html">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
-                        </a> 
-                    </li> <?php } ?>
-
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
-
     <div class="container">
         <h2>Shopping Bag</h2>
         <hr>
@@ -208,14 +189,10 @@ header('Location:index.php');
         } else if (sNum == 2) {
             shippingCost = 6.95;
             oldShippingCost = 6.95;
-        }else if(sNum == 3){ 
-	    shippingCost = 0; 
-	    oldShippingCost = 0; 
-	}
-	
+        }
         // add the cost of shipping by grabbing the value the user chose
         $('#shipping').html('$' + parseFloat(shippingCost));
-        $('#cartTax').html('$' + parseFloat(Math.round((shippingCost + tax) * 100) / 100).toFixed(2));
+        $('#cartTax').html('$' + parseFloat(Math.round(tax * 100) / 100).toFixed(2));
         $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + shippingCost) * 100) / 100).toFixed(2));
     }
 
@@ -230,9 +207,8 @@ header('Location:index.php');
         divID += productID;
         $(divID).remove();
         cost -= price;
-	tax = cost * .07;
         $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
-        $('#cartTax').html('$' + parseFloat(Math.round((oldShippingCost + tax) * 100) / 100).toFixed(2));
+        $('#cartTax').html('$' + parseFloat(Math.round(tax * 100) / 100).toFixed(2));
         $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + oldShippingCost) * 100) / 100).toFixed(2));
 
         // make sure to delete the entry from the database as well
