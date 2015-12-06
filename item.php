@@ -9,7 +9,7 @@ $description = "Description Not Found";
 $category = "";
 $tagSpecific = "";
 
-if (isset($_GET['id'])) {
+if (isset($_GET['productID'])) {
     $query   = "SELECT * FROM product WHERE id = "+productID+";";
     $results = db2_exec($_SESSION['connection'], $query);
     //only one entry
