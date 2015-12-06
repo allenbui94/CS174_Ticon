@@ -115,7 +115,7 @@ if (isset($_GET['productID'])) {
             <!--col-->
             <div class="col-md-9">
                 <div class="thumbnail">
-                    <img class="img-responsive" src="http://placehold.it/800x300" alt="">
+                    <img class="img-responsive" src="clothing pics/<?=$productID?>.jpg" alt="">
                     <div class="caption-full">
                         <h4 class="pull-right"><?=$price?></h4>
                         <h4><a href="#"><?=$name?></a></h4>
