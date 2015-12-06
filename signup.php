@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require "connection.php";
+
+session_start(); 
+if(!isset($_SESSION['CurrentUser']){
+header('Location:index.php');
+} 
+
+
 ?>
 <head>
     <meta charset="utf-8">
@@ -26,18 +32,20 @@ require "connection.php";
 </head>
 
 <body>
+
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
+        <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand lead2" href="index.html"> T </a>
+                <a class="navbar-brand lead2" href="index.php"> T </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -53,35 +61,41 @@ require "connection.php";
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
+        
+        <?php if(!isset($_SESSION['CurrentUser'])){ ?>  
                     <li>
-                        <a href="login.html">Login/SignUp</a>
+                        <a href="login.php">Login/SignUp</a>
+                    </li> <?php } ?>
+        <?php if(isset($_SESSION['CurrentUser'])){?>
+            <li>
+                        <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
                     </li>
-                    <li>
-                        <a href="cart.html">
+                    <li> 
+                        <a href="cart.php">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
-                        </a>
-                    </li>
+                        </a> 
+                    </li> <?php } ?>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
-    </nav>
-    <!-- Page Content -->
+    </nav>    <!-- Page Content -->
     <div class="container">
         <h2>Register</h2>
         <hr>
-        <form id="registerForm" action="signup.php" method="POST">
+        <form id="registerForm" action="signupValidate.php" method="POST">
             <div class="form-group">
                 <div class="col-md-6">
                     <label for="InputName">First Name</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" required>
+                        <input type="text" name="firstName" class="form-control" id="firstName" placeholder="Enter First Name" required>
                     </div>
                     <br>
                     <label for="InputName">Enter Email</label>
                     <div class="input-group">
-                         <input type="email" class="form-control" id="email" placeholder="Enter Email" required>
+                         <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email" required>
                         <span class="input-group-addon"></span>
                     </div>
                     <hr>
@@ -91,12 +105,12 @@ require "connection.php";
                 <div class="col-md-6">
                     <label for="InputName">Last Name</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" required>
+                        <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Enter Last Name" required>
                     </div>
                     <br>
                     <label for="InputPassword">Enter Password</label>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="pwd" placeholder="Enter Password" required>
+                        <input type="password" name="pwd" class="form-control" id="pwd" placeholder="Enter Password" required>
                     </div>
                     <hr>
                 </div>
@@ -105,7 +119,7 @@ require "connection.php";
                 <div class="col-lg-12">
                     <label for="InputEmail">Enter Phone Number:</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" required>
+                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone Number" required>
                         <span class="input-group-addon"></span>
                     </div>
                     <br>
@@ -115,7 +129,7 @@ require "connection.php";
                 <div class="col-lg-12">
                     <label for="InputStreetName">Address</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="street" placeholder="Enter Street Name and Number" required>
+                        <input type="text" name="street" class="form-control" id="street" placeholder="Enter Street Name and Number" required>
                         <span class="input-group-addon"></span>
                     </div>
                     <br>
@@ -125,7 +139,7 @@ require "connection.php";
                 <div class="col-lg-12">
                     <label for="InputStreetName">Zip Code</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="zip" placeholder="Enter Zip Code" required>
+                        <input type="text" name="zip" class="form-control" id="zip" placeholder="Enter Zip Code" required>
                     </div>
                     <br>
                 </div>
@@ -134,7 +148,7 @@ require "connection.php";
                 <div class="col-lg-12">
                     <label for="InputCity">City</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="city" placeholder="Enter City" required>
+                        <input type="text" name="city" class="form-control" id="city" placeholder="Enter City" required>
                         <span class="input-group-addon"></span>
                     </div>
                     <br>
@@ -144,7 +158,7 @@ require "connection.php";
                 <div class="col-lg-12">
                     <label for="InputCity">State</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="state" placeholder="Enter Full State Name" required>
+                        <input type="text" name="state" class="form-control" id="state" placeholder="Enter Full State Name" required>
                         <span class="input-group-addon"></span>
                     </div>
                     <br>
@@ -154,7 +168,7 @@ require "connection.php";
                 <div class="col-lg-12">
                     <label for="InputCity">Country</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="country" placeholder="Enter Country" required>
+                        <input type="text" name="country" class="form-control" id="country" placeholder="Enter Country" required>
                         <span class="input-group-addon"></span>
                     </div>
                     <br>

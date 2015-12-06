@@ -1,3 +1,9 @@
+<?php 
+
+session_start();
+
+?> 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,9 +27,12 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body>
+
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -35,7 +44,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand lead2" href="index.html"> T </a>
+                <a class="navbar-brand lead2" href="index.php"> T </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -51,14 +60,21 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
-                    <li id = "username">
-                        <a href="login.html">Login/SignUp</a>
-                    </li>
+		
+		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
                     <li>
-                        <a href="cart.html">
-                            <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
-                        </a>
+                        <a href="login.php">Login/SignUp</a>
+                    </li> <?php } ?>
+		<?php if(isset($_SESSION['CurrentUser'])){?>
+		    <li>
+                        <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
                     </li>
+                    <li> 
+                        <a href="cart.php">
+                            <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
+                        </a> 
+                    </li> <?php } ?>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -72,22 +88,22 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <form class="form-horizontal" role="form" method="post">
+                <form class="form-horizontal" role="form" method="post" action="php/loginCheck.php">
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="email">Email:</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                            <input type="email" name = "email" class="form-control" id="email" placeholder="Enter email">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="pwd">Password:</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                            <input type="password" name = "pwd" class="form-control" id="pwd" placeholder="Enter password">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-2 col-sm-10">
-                            <button type="submit" class="btn btn-success" onclick="login.php">Sign In</button>
+                            <button type="submit" name ="submit" id="submit" class="btn btn-success">Sign In</button>
                         </div>
                     </div>
                 </form> <!---form--->

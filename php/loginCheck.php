@@ -7,8 +7,9 @@ session_start(); //start php session
 $error =''; 
 
 if(isset($_POST['submit'])){ 
-  if(empty[$_POST['email'])||empty($_POST['pwd'])){ 
-	$error = "Email address or password is invalid"; 
+  if(empty($_POST['email'])||empty($_POST['pwd'])){ 
+	$error = "Email address or password is empty."; 
+	echo "<h2> $error</h2>";
   } 
   else{  
 	$email = $_POST['email']; 
@@ -35,24 +36,35 @@ if(isset($_POST['submit'])){
 
 	   }
  	   else{
-		echo "Statement didn't execute";  
+		echo "Error signing in. Username or Password is incorrect";  
 	   }
-	   $numRows = 0; 
+	   $numRows = 0;
+	   $customerName="";  
 	   while($row = db2_fetch_array($stmt)){
-		$numRows += 1; 
-			 
+		$numRows += 1;
+		 $customerName= $row['firstName']." ".$row['lastName']; 	 
 	   }
 	   
 	   if($numRows == 1){
-		 $_SESSION['userName'] = 
+		echo 'true'; 
+		 $_SESSION['CurrentUser'] = $customerName;  
 	   } 	  
 
+	   else{ 
+		echo 'false';	
+	   } 
 
-	} 
+
+	}
+      else{ 
+	echo db2_conn_error()."<br>";
+	echo db2_conn_errormsg()."<br>";
+	echo "Connection failed.<br>";
+      } 	 
 	
 
-  }
-} 
+  } //else 
+} //if isset
 
 
 

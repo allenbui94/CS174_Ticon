@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿<?php
+
+session_start(); 
+if(!isset($_SESSION['CurrentUser'])){
+header('Location:index.php');
+} 
+
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 ​ ​
 
@@ -26,18 +35,20 @@
 ​ ​
 
 <body>
+
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
+        <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand lead2" href="index.html"> T </a>
+                <a class="navbar-brand lead2" href="index.php"> T </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -53,20 +64,28 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
+		
+		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
                     <li>
-                        <a href="login.html">Login/SignUp</a>
+                        <a href="login.php">Login/SignUp</a>
+                    </li> <?php } ?>
+		<?php if(isset($_SESSION['CurrentUser'])){?>
+		    <li>
+                        <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
                     </li>
-                    <li>
-                        <a href="cart.html">
+                    <li> 
+                        <a href="cart.php">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
-                        </a>
-                    </li>
+                        </a> 
+                    </li> <?php } ?>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
+
     <div class="container">
         <h2>Shopping Bag</h2>
         <hr>

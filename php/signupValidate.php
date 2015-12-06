@@ -23,7 +23,10 @@
 	}
 	
     if(db2_execute("INSERT INTO `customer` (`firstName`, `lastName`, `street`, `city`, `state`, `zip`, `country`, `email`, `password`, `phone`, `id`) VALUES ('".$firstName."', '".$lastName."', '".$street."', '".$city."', '".$state."', '".$zip."', '".$country."', '".$email."', '".$password."', '".$phone."', '".$id."')"))
-    echo"successfully inserted";
+    { 
+    echo"successfully inserted"; 
+	header(Location:"login.php"); 	
+	}
     else
     echo "failed";
 ?>
