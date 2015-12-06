@@ -1,3 +1,21 @@
+<?php
+require 'php/connection.php';
+
+$name = "Product Not Found";
+$description = "Description Not Found";
+$price = "Unknown";
+
+if (isset($_GET['productID'])) {
+    $rows    = array();
+    $query   = "SELECT * FROM product WHERE id = "+productID;
+    $results = db2_exec($_SESSION['connection'], $query);
+    while ($row = db2_fetch_array($results)) {
+        array_push($rows, $row);
+    }
+    //only one entry so...
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,10 +110,10 @@
                 <div class="thumbnail">
                     <img class="img-responsive" src="http://placehold.it/800x300" alt="">
                     <div class="caption-full">
-                        <h4 class="pull-right">$24.99</h4>
-                        <h4><a href="#">Product Name</a>
+                        <h4 class="pull-right"><?=$price?></h4>
+                        <h4><a href="#"><?=$name?></a>
                         </h4>
-                        <p>Description</p>
+                        <p><?=$description?></p>
                     </div>
                 </div>
             </div>
