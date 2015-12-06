@@ -269,9 +269,7 @@ session_start();
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-<<<<<<< HEAD:index.php
-=======
-	
+
 	<script type="text/javascript">
     $(document).ready(function() {
 		// do a query to retrieve random productIDs and info and store them into arrays
@@ -306,7 +304,6 @@ session_start();
 	}
 	
 	</script>
->>>>>>> origin/master:index.html
 </body>
 
 </html>
