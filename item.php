@@ -1,18 +1,25 @@
 <?php
 require 'php/connection.php';
 
+$id = "";
 $name = "Product Not Found";
-$description = "Description Not Found";
 $price = "Unknown";
+$description = "Description Not Found";
+$category = "";
+$tagSpecific = "";
 
 if (isset($_GET['productID'])) {
-    $rows    = array();
-    $query   = "SELECT * FROM product WHERE id = "+productID;
+    $query   = "SELECT * FROM product WHERE id = "+productID+";";
     $results = db2_exec($_SESSION['connection'], $query);
-    while ($row = db2_fetch_array($results)) {
-        array_push($rows, $row);
+    //only one entry
+    while ($row = db2_fetch_object($results)) {
+        $id = $row->productID;
+        $name = $row->name;
+        $price = $row ->price;
+        $description = $row->description;
+        $category = $row->category;
+        $tagSpecific = $row->tagSpecific;
     }
-    //only one entry so...
 }
 
 ?>
@@ -111,9 +118,9 @@ if (isset($_GET['productID'])) {
                     <img class="img-responsive" src="http://placehold.it/800x300" alt="">
                     <div class="caption-full">
                         <h4 class="pull-right"><?=$price?></h4>
-                        <h4><a href="#"><?=$name?></a>
-                        </h4>
+                        <h4><a href="#"><?=$name?></a></h4>
                         <p><?=$description?></p>
+                        <p></p>
                     </div>
                 </div>
             </div>
