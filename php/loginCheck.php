@@ -5,13 +5,16 @@ require 'connection.php';
 
 session_start(); //start php session
 $error =''; 
+$failedLogin = 'Username or Password is invalid.';
 
 if(isset($_POST['submit'])){ 
   if(empty($_POST['email'])||empty($_POST['pwd'])){ 
-	$error = "Email address or password is empty."; 
-	echo "<h2> $error</h2>";
+	$error = "Email address or password is empty.";
+	$_SESSION['ErrorMsgEmpty']=$error; 
+	header('Location:../login.php');	
   } 
   else{  
+
 	$email = $_POST['email']; 
 	$pwd = $_POST['pwd']; 
 
@@ -36,22 +39,31 @@ if(isset($_POST['submit'])){
 
 	   }
  	   else{
-		echo "Error signing in. Username or Password is incorrect";  
+		$_SESSION['failedLoginMsg']=$failedLogin; 
+		header('Location:../login.php');  
 	   }
 	   $numRows = 0;
 	   $customerName="";  
 	   while($row = db2_fetch_array($stmt)){
 		$numRows += 1;
-		 $customerName= $row['firstName']." ".$row['lastName']; 	 
+		 $customerName= $row[1]." ".$row[2]; 
+		 /* echo $row[0]. " ".$row[1]." ".$row[2];
+		 echo '<br>'; */ 
+	 
 	   }
 	   
 	   if($numRows == 1){
-		echo 'true'; 
-		 $_SESSION['CurrentUser'] = $customerName;  
+		//echo 'true'; 
+		 $_SESSION['CurrentUser'] = $customerName;
+		 $_SESSION['SuccessMsg'] = 'Welcome, '.$customerName.'. You have been successfully logged in!';
+		 header('Location:../index.php');
+		 exit;  
 	   } 	  
 
 	   else{ 
-		echo 'false';	
+		$_SESSION['failedLoginMsg']=$failedLogin;
+		header('Location:../login.php');  
+			
 	   } 
 
 

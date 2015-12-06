@@ -88,6 +88,7 @@ session_start();
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+		<h5 class="errorMsg"><?php if(isset($_SESSION['ErrorMsgEmpty'])){ echo $_SESSION['ErrorMsgEmpty']; unset($_SESSION['ErrorMsgEmpty']);} else if(isset($_SESSION['failedLoginMsg'])){echo $_SESSION['failedLoginMsg']; unset($_SESSION['failedLoginMsg']);}?></h5>
                 <form class="form-horizontal" role="form" method="post" action="php/loginCheck.php">
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="email">Email:</label>

@@ -80,6 +80,12 @@ session_start();
     </nav>
  <!-- Page Content -->
     <div class="container">
+	<?php if(isset($_SESSION['SuccessMsg'])){ ?>
+	<div class ="row">
+	   <div class ="col-md-12">
+		<h4 class = "success"> <?php echo $_SESSION['SuccessMsg']; unset($_SESSION['SuccessMsg']); ?></h4>
+           </div><!--col--> 
+	</div> <!--row--> <?php } ?>
         <div class="row">
             <div class="col-md-3">
                 <p class="lead">Ticon</p>
