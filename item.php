@@ -1,38 +1,28 @@
 <?php
+session_start(); 
 require 'php/connection.php';
-
-$id = "";
 $name = "Product Not Found";
-$price = "Unknown";
 $description = "Description Not Found";
-$category = "";
-$tagSpecific = "";
-
-if (isset($_GET['id'])) {
-    $query   = "SELECT * FROM product WHERE id = "+productID+";";
+$price = "Unknown";
+if (isset($_GET['productID'])) {
+    $rows    = array();
+    $query   = "SELECT * FROM product WHERE id = "+productID;
     $results = db2_exec($_SESSION['connection'], $query);
-    //only one entry
-    while ($row = db2_fetch_object($results)) {
-        $id = $row->productID;
-        $name = $row->name;
-        $price = $row ->price;
-        $description = $row->description;
-        $category = $row->category;
-        $tagSpecific = $row->tagSpecific;
+    while ($row = db2_fetch_array($results)) {
+        array_push($rows, $row);
     }
+    //only one entry so...
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><?=$name?> - Ticon</title>
+    <title>View Item</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts-->
@@ -47,20 +37,21 @@ if (isset($_GET['id'])) {
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
 <body>
+
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
+        <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand lead2" href="index.html"> T </a>
+                <a class="navbar-brand lead2" href="index.php"> T </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -76,14 +67,21 @@ if (isset($_GET['id'])) {
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
+        
+        <?php if(!isset($_SESSION['CurrentUser'])){ ?>  
                     <li>
-                        <a href="login.html">Login/SignUp</a>
+                        <a href="login.php">Login/SignUp</a>
+                    </li> <?php } ?>
+        <?php if(isset($_SESSION['CurrentUser'])){?>
+            <li>
+                        <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
                     </li>
-                    <li>
-                        <a href="cart.html">
+                    <li> 
+                        <a href="cart.php">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
-                        </a>
-                    </li>
+                        </a> 
+                    </li> <?php } ?>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -115,12 +113,12 @@ if (isset($_GET['id'])) {
             <!--col-->
             <div class="col-md-9">
                 <div class="thumbnail">
-                    <img class="img-responsive" src="clothing pics/<?=$id?>.jpg" alt="">
+                    <img class="img-responsive" src="http://placehold.it/800x300" alt="">
                     <div class="caption-full">
                         <h4 class="pull-right"><?=$price?></h4>
-                        <h4><a href="#"><?=$name?></a></h4>
+                        <h4><a href="#"><?=$name?></a>
+                        </h4>
                         <p><?=$description?></p>
-                        <p></p>
                     </div>
                 </div>
             </div>
@@ -144,5 +142,4 @@ if (isset($_GET['id'])) {
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 </body>
-
 </html>
