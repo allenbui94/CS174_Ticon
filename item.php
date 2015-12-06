@@ -1,26 +1,49 @@
 <?php
-session_start();
-require 'php/connection.php';
+$database = "sample";
+$user = "";
+$pass = "";
+$conn = db2_connect($database, $user, $pass);
+$productID = $_GET['productID'];
 
-$id = "";
-$name = "Product Not Found";
-$price = "Unknown";
-$description = "Description Not Found";
-$category = "";
-$tagSpecific = "";
+$id = array();
+$name = array();
+$price = array();
+$description = array();
+$category = array();
+$tagSpecific = array();
 
-if (isset($_GET['productID'])) {
-    $query   = "SELECT * FROM product WHERE id = "+productID+";";
-    $results = db2_exec($_SESSION['connection'], $query);
-    //only one entry
-    while ($row = db2_fetch_object($results)) {
-        $id = $row->productID;
-        $name = $row->name;
-        $price = $row ->price;
-        $description = $row->description;
-        $category = $row->category;
-        $tagSpecific = $row->tagSpecific;
-    }
+if ($productID != "") {
+//echo $productID;	
+$sql = "SELECT name, price, description, category, tagSpecific FROM product WHERE productID = '" . $productID . "'";
+
+	$stmt = db2_prepare($conn, $sql);	
+
+	if ($stmt) {
+		$result = db2_execute($stmt);
+		
+		if (!$result)
+		{
+			echo "error";
+		}
+		while ($row = db2_fetch_array($stmt)) {
+   			array_push($name, $row[0]);
+   			array_push($price, $row[1]);
+   			array_push($description, $row[2]);
+   			array_push($category, $row[3]);
+   			array_push($tagSpecific, $row[4]);
+		}	
+		/*
+		print_r($name);
+		print_r($price);
+		print_r($description);
+		print_r($category);
+		print_r($tagSpecific);*/
+		db2_close($conn);
+	}
+	
+	else {
+		echo "error";
+	}
 }
 
 ?>
@@ -50,8 +73,6 @@ if (isset($_GET['productID'])) {
 </head>
 
 <body>
-
-
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -63,7 +84,7 @@ if (isset($_GET['productID'])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand lead2" href="index.php"> T </a>
+                <a class="navbar-brand lead2" href="index.html"> T </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -79,28 +100,20 @@ if (isset($_GET['productID'])) {
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
-		
-		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
                     <li>
-                        <a href="login.php">Login/SignUp</a>
-                    </li> <?php } ?>
-		<?php if(isset($_SESSION['CurrentUser'])){?>
-		    <li>
-                        <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
+                        <a href="login.html">Login/SignUp</a>
                     </li>
-                    <li> 
-                        <a href="cart.php">
+                    <li>
+                        <a href="cart.html">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
-                        </a> 
-                    </li> <?php } ?>
-
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
-
     <!-- Page Content -->
     <div class="container">
         <div class="row">
@@ -126,11 +139,12 @@ if (isset($_GET['productID'])) {
             <!--col-->
             <div class="col-md-9">
                 <div class="thumbnail">
-                    <img class="img-responsive" src="clothing pics/<?=$id?>.jpg" alt="">
+                    <img id = "productPicture" src="" alt="">
                     <div class="caption-full">
-                        <h4 class="pull-right"><?=$price?></h4>
-                        <h4><a href="#"><?=$name?></a></h4>
-                        <p><?=$description?></p>
+                        <h3 class="pull-right" id = "priceField"></h3>
+                        <h3><a href="#" id = "nameField"></a></h3>
+						<br>
+                        <h4 id = "descriptionField"></h4>
                         <p></p>
                     </div>
                 </div>
@@ -154,6 +168,25 @@ if (isset($_GET['productID'])) {
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+	
+	 <script>
+		var pName = <?php echo json_encode($name); ?>;
+		var pPrice = <?php echo json_encode($price); ?>;
+		var pDescription = <?php echo json_encode($description); ?>;
+		var pID = <?php echo json_encode($productID); ?>;
+		var picSrc = "clothing_pics/" + pID + ".jpg";
+
+		var img = document.getElementById("productPicture");
+		img.src = picSrc;
+		
+		img.style.height = '100%';
+		img.style.width = '100%';
+		
+		document.title = pName;
+		document.getElementById("nameField").innerHTML = pName;
+		document.getElementById("priceField").innerHTML = pPrice;
+		document.getElementById("descriptionField").innerHTML = pDescription;
+	 </script>
 </body>
 
 </html>
