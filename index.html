@@ -246,8 +246,14 @@
         createProductTable(productIDs, prices, names, descriptions); // pass the array(s) containing all the productIDs from the cart
 	});
 	
+	/**
+	* Creates a box with information for an item
+	* @param {Array(int)} productIDs the productIDs
+	* @param {Array(double)} prices the cost of each item w/o tax
+	* @param {Array(String)} names the name of each item
+	* @param {Array(String)} descriptions a <255 character description of the item
+	*/
 	function createProductTable(productIDs, prices, names, descriptions){
-		//var html = '<div class="col-sm-4 col-lg-4 col-md-4" style="width:30%;"><div class="thumbnail"><img src="http://placehold.it/320x150" alt=""><div class="caption"><h4 class="pull-right">$24.99</h4><h4><a href="#">First Product</a></h4><p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp</a>. The quick brown fox jumped over the lazy dogs. The quick brown fox jumped over the lazy dogs. The quick brown fox jumped over the lazy dogs. The quick brown fox jumped over the lazy dogs.</p></div></div></div>';
 		var html = "";
 		
 		for(i = 0; i < productIDs.length; i++){
@@ -257,8 +263,6 @@
 			prices[i] + '</h4>' +
 			descriptions[i] + '</p></div></div></div>';
 		}
-		
-		  
 		 $('#productTable').html(html);
 	}
 	
