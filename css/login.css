@@ -21,6 +21,13 @@ body {
 
 } 
 
+.errorMsg{ 
+   color:#ff3333;
+   font-style:italic;
+   font-weight:bold;
+   text-transform:uppercase;
+}  
+
 footer {
     margin: 50px 0;
 }

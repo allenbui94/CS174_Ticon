@@ -26,6 +26,17 @@ body {
     overflow: hidden;
 }
 
+.success{ 
+
+   color:white;
+   background-color:#009999;
+   text-shadow:2px 2px #666666;	
+   padding: 10px;
+   font-style:italic;
+   text-transform:uppercase;
+}  
+
+
 .caption h4 {
    white-space: nowrap;
 	margin-top:-5px;
