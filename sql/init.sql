@@ -47,3 +47,8 @@ CREATE TABLE warehouse(
     longitude double,
     latitude double
 );
+create table cart
+(
+	customerID int,
+	productID int
+);
