@@ -34,7 +34,7 @@ CREATE TABLE orderInfo(
     orderAmt varchar(32),
     shippingType varchar(32),
     shippingPrice varchar(32),
-    tax dvarchar(32),
+    tax varchar(32),
     orderTime varchar(32)
 );
 CREATE TABLE orderedItems(
