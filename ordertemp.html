@@ -1,13 +1,4 @@
-﻿<?php
-
-session_start(); 
-if(!isset($_SESSION['CurrentUser'])){
-header('Location:index.php');
-} 
-
-?>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 ​ ​
 
@@ -87,7 +78,7 @@ header('Location:index.php');
     </nav>
 
     <div class="container">
-        <h2>Shopping Bag</h2>
+        <h2>Order History</h2>
         <hr>
         <br>
     </div>
@@ -165,7 +156,7 @@ header('Location:index.php');
     function createProductTable(productIDs, prices, names, categories, tagSpecifics) {
         var html = ""; // we append all our html stuff into here
         cost = 0; // creates a productTable for every item in the cart
-        for (i = 0; i < productIDs.length; i++) {    
+        for (i = 0; i < productIDs.length; i++) {
         html += '<div class = "' + 
 		productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;"><center>'
 		+ names[i]
