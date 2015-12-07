@@ -5,20 +5,29 @@ $database = "sample";
 $user = "";
 $pass = "";
 $conn = db2_connect($database, $user, $pass);
-//echo $_SESSION['CurrentUser'];
-//$customerID = $_GET['CurrentUser'];
+
+$inputOrderID = $_GET['orderID'];
+$customerID = $_SESSION['CustomerID'];
 //$_SESSION['CurrentUser'];
 $id = array();
+$orderID = array();
+$orderTime = array();
+$itemCost = array();
+$firstName = array();
+$city = array();
+$shippingType = array();
+
+$productID = array();
 $name = array();
 $price = array();
-$description = array();
 $category = array();
 $tagSpecific = array();
 
 
-$sql = "SELECT name, price, description, category, tagSpecific FROM product";
-
+	//$sql = "select orderInfo.orderID, orderInfo.orderTime, orderInfo.itemCost, customer.firstName, customer.city from customer join orderInfo on orderInfo.customerID = customer.id where orderInfo.customerID = '" . $customerID ."'";
+	$sql = "select orderInfo.orderID, orderInfo.orderTime, orderInfo.itemCost, customer.firstName, customer.city, orderInfo.shippingType from customer join orderInfo on orderInfo.customerID = customer.id where orderInfo.customerID = '" . $customerID ."' and orderInfo.orderID = '". $inputOrderID ."'";
 	$stmt = db2_prepare($conn, $sql);	
+	$sql2 = "select orderedItems.orderID, orderedItems.productID, product.name, product.price, product.category, product.tagSpecific from orderedItems join orderInfo on orderInfo.orderID = orderedItems.orderID join product on orderedItems.productID = product.productID where orderInfo.orderID = '" .$inputOrderID."'";
 
 	if ($stmt) {
 		$result = db2_execute($stmt);
@@ -28,19 +37,33 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product";
 			echo "error";
 		}
 		while ($row = db2_fetch_array($stmt)) {
-   			array_push($name, $row[0]);
-   			array_push($price, $row[1]);
-   			array_push($description, $row[2]);
-   			array_push($category, $row[3]);
-   			array_push($tagSpecific, $row[4]);
+   			array_push($orderID, $row[0]);
+   			array_push($orderTime, $row[1]);
+   			array_push($itemCost, $row[2]);
+   			array_push($firstName, $row[3]);
+   			array_push($city, $row[4]);
+			array_push($shippingType, $row[5]);
 		}	
 		
-		//print_r($name);
-		/*print_r($price);
+		$stmt = db2_prepare($conn, $sql2);	
+		if ($stmt) {
+			$result = db2_execute($stmt);
+			while ($row = db2_fetch_array($stmt)) {			
+				array_push($productID, $row[1]);	
+				array_push($name, $row[2]);	
+				array_push($price, $row[3]);	
+				array_push($category, $row[4]);	
+				array_push($tagSpecific, $row[5]);	
+		}	
+		}
+		//print_r($shippingType);
+		/*
+		print_r($name);
+		print_r($price);
 		print_r($description);
 		print_r($category);
-		print_r($tagSpecific);
-		db2_close($conn);*/
+		print_r($tagSpecific);*/
+		db2_close($conn);
 	}
 	
 	else {
@@ -164,32 +187,43 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product";
     <script type="text/javascript">
 
     $(document).ready(function() {
-        // do a query to retrieve all the productIDs, etc from this user's cart and store them into arrays
-        // Example of a cart with stuff in it after doing a query. Something like
-        // "select cart.productID, product.name, product.price, product.description, product.category, product.tag specific from cart join product on product.productID=cart.productID where cart.ID = [whatever the logged in customer's ID is];"
-        var productIDs = [1000000001, 1000000002, 1000000009, 1000000010];
-        var prices = [19.99, 249.99, 219.99, 19.99];
-        var names = ["Volcom Frickin Chino Pants", "Michael Kors 1224 Suit", "Tommy Hilfiger Black Classic-Fit Tuxedo Suit", "John Ashford Long-Sleeve Herringbone Flannel Shirt"];
-        var categories = ["Pants", "Suit", "Suit", "Shirt"];
-        var tagSpecifics = ["Men's", "Men's", "Men's", "Men's"];
-        //var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur";
+	/*$orderID = array();
+$orderTime = array();
+$itemCost = array();
+$firstName = array();
+$city = array();*/
         
-		
-		createOrderInfoTable(productIDs, prices, names, categories, tagSpecifics);
+        var productIDs =  <?php echo json_encode($productID); ?>;//[1000000001, 1000000002, 1000000009, 1000000010];
+        var prices =  <?php echo json_encode($price); ?>;//[19.99, 249.99, 219.99, 19.99];
+        var names =  <?php echo json_encode($name); ?>;//["Volcom Frickin Chino Pants", "Michael Kors 1224 Suit", "Tommy Hilfiger Black Classic-Fit Tuxedo Suit", "John Ashford Long-Sleeve Herringbone Flannel Shirt"];
+        var categories =  <?php echo json_encode($category); ?>;//["Pants", "Suit", "Suit", "Shirt"];
+        var tagSpecifics =  <?php echo json_encode($tagSpecific); ?>;//["Men's", "Men's", "Men's", "Men's"];
+        //var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur";
+        var orderIDs = <?php echo json_encode($orderID); ?>;
+		var orderTimes = <?php echo json_encode($orderTime); ?>;
+		var itemCosts = <?php echo json_encode($itemCost); ?>;
+		var firstNames = <?php echo json_encode($firstName); ?>;
+		var cities = <?php echo json_encode($city); ?>;
+		var shippingTypes = <?php echo json_encode($shippingType); ?>;
+		//console.log(shippingTypes);
+		createOrderInfoTable(orderIDs, orderTimes, itemCosts, firstNames, cities, shippingTypes);
 		createProductTable(productIDs, prices, names, categories, tagSpecifics); // pass the array(s) containing all the productIDs from the cart
     });
 
-	function createOrderInfoTable(productIDs, prices, names, categories, tagSpecifics){
+	function createOrderInfoTable(orderIDs, orderTimes, itemCosts, firstNames, cities, shippingTypes){
+		var totalTemp = parseFloat(itemCosts[0]);
+		totalTemp = Math.round(totalTemp * 100) / 100;
+	
 		var html = '<div class = "' + 
-		productIDs[0] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;">Order #'
-		+ productIDs[0]
+		orderIDs[0] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;">Order #'
+		+ orderIDs[0]
 		+ '</th><th style="40%;">Tracking Info</th><th>Total</th></tr></thead><tbody><tr><td></div></td><td><br><br></td><td><table class="table"><tr><td>Date Ordered:</td><td>'
-		+ '0985175' + '</td></tr><tr><td>Status:</td><td>' 
-		+ categories[0] + '</td></tr><td>Destination:</td><td>'
-		+ tagSpecifics[0] + '</td></tr><td>Current Location</td><td>'
-		+ tagSpecifics[0] + '</td></tr><td>ETA:</td><td>'
-		+ tagSpecifics[0] +'</table></td><td>'
-		+ '$' + prices[0] + '<br><div class="caption"><p></div></td></tr></tbody></table><br></div>';
+		+ orderTimes[0] + '</td></tr><tr><td>Status:</td><td>' 
+		+ getOrderStatus(orderTimes[0], shippingTypes[0]) + '</td></tr><td>Destination:</td><td>'
+		+ cities[0] + '</td></tr><td>Current Location</td><td>'
+		+ "CURRENT LOCATION" + '</td></tr><td>ETA:</td><td>'
+		+ getDaysLeft(orderTimes[0], shippingTypes[0]) +'</table></td><td>'
+		+ '$' + parseFloat(Math.round(totalTemp * 100) / 100).toFixed(2) + '<br><div class="caption"><p></div></td></tr></tbody></table><br></div>';
 		$('#orderInfoTable').html(html);
 	}
 	
@@ -201,8 +235,8 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product";
 		+ names[i]
 		+ '</center></th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="'
 		+ 'clothing_pics/'+ productIDs[i]+'.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>'
-		+ '0985175' + '</td></tr><tr><td>Category:</td><td>' 
-		+ categories[i] + '</td></tr><td>Product ID:</td><td>'
+		+ productIDs[i] + '</td></tr><tr><td>Category:</td><td>' 
+		+ categories[i] + '</td></tr><td>Tag:</td><td>'
 		+ tagSpecifics[i] + '</table></td><td>'
 		+ '$' + prices[i] + '<br><div class="caption"><p></div></td></tr></tbody></table><br></div>';  
         }
@@ -233,19 +267,158 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product";
         $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + shippingCost) * 100) / 100).toFixed(2));
     }
 
-    function removeCartEntry(productID, price) {
-        var divID = "\.";
+	
+	/**
+ * Gets the latitude/longitude from an address
+ * @param {String} formattedAddress (e.g. "1 Washington Sq, San Jose, CA 95192")
+ * @return {google.maps.Point} the point (e.g. {x: 37.3351424, y: -121.88127580000003})
+ */
+function getLocation(formattedAddress) {
+   var geocoder = new google.maps.Geocoder();
+   geocoder.geocode({
+      'address': formattedAddress
+   }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+         var latitude = results[0].geometry.location.lat();
+         var longitude = results[0].geometry.location.lng();
+         var point = new google.maps.Point(latitude, longitude);
 
-        divID += productID;
-        $(divID).remove();
-        cost -= price;
-	tax = cost * .07;
-        $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
-        $('#cartTax').html('$' + parseFloat(Math.round((oldShippingCost + tax) * 100) / 100).toFixed(2));
-        $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + oldShippingCost) * 100) / 100).toFixed(2));
+         console.log(point);
+         alert(point);
+         // need to return point somehow
+      }
+   });
+}
 
-        // make sure to delete the entry from the database as well
-    }
+/**
+ * Gets the current location of the package
+ * @param {google.maps.Point} start the starting point of the package (e.g. 37.3351424, -121.8812758)
+ * @param {google.maps.Point} end the destination of the package (e.g. 37.40313, -121.96973)
+ * @param {String} orderDate the time the package was ordered(e.g. "October 13, 2015 11:13:00")
+ * @param {String} shipSpeed the shipping speed the user chose (e.g. 2 [days])
+ * @return {String} the city of which the package is currently in (e.g. "San Jose")
+ */
+function getPackageLoc(start, end, orderDate, shipSpeed) {
+   var orderStatus = getOrderStatus(orderDate, shipSpeed);
+
+   if (orderStatus == "Preparing for shipment") {
+      getCityName(start);
+      return "getPackageLoc - preparing";
+   } else if (orderStatus == "Delivered") {
+      getCityName(end);
+      return "getPackageLoc - delivered"
+   } else {
+      var currentX;
+      var currentY;
+      var diffX = Math.abs(start.x - end.x);
+      var diffY = Math.abs(start.y - end.y);
+      var percentDone = (shipSpeed - getDaysLeft(orderDate, shipSpeed)) / shipSpeed; // e.g. 1 day into 5 day shipping is 20%
+
+      diffX = diffX * percentDone;
+      diffY = diffY * percentDone;
+      if (start.x > end.x) {
+         currentX = start.x - diffX;
+      } else {
+         currentX = start.x + diffX;
+      }
+      if (start.y > end.y) {
+         currentY = start.y - diffY;
+      } else {
+         currentY = start.y + diffY;
+      }
+      var currentLoc = new google.maps.Point(currentX, currentY);
+
+      // need to retrieve cityname from getCityName and return it
+      getCityName(currentLoc);
+      return "getPackageLoc - intransit"
+   }
+}
+
+/**
+ * Gets the city with a given point
+ * @param {google.maps.Point} start the point to search (e.g. 37.3351424, -121.8812758)
+ * @return {String} the city of loc (e.g. "San Jose")
+ */
+function getCityName(loc) {
+   var geocoder = new google.maps.Geocoder();;
+   var latlng = new google.maps.LatLng(loc.x, loc.y);
+
+   geocoder.geocode({
+      'latLng': latlng
+   }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+         if (results[1]) {
+            for (var i = 0; i < results[0].address_components.length; i++) {
+               for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+                  if (results[0].address_components[i].types[b] == "locality") {
+                     city = results[0].address_components[i];
+                     break;
+                  }
+               }
+            }
+            alert("The package is currently in " + city.long_name);
+            console.log(city.long_name);
+            // alert(city.long_name)
+            // need to return city.long_name somehow
+         }
+      }
+   });
+}
+
+/**
+ * Gets the amount of days left until package delivery
+ * @param {String} orderDate the time the package was ordered(e.g. "October 13, 2015 11:13:00")
+ * @param {String} shipSpeed the shipping speed the user chose (e.g. 2 [days])
+ * @return {Number} the amount of days remaining
+ */
+function getDaysLeft(orderDate, shipSpeed) {
+console.log(orderDate);
+	var x = parseInt(shipSpeed)
+   var deliveryDate = new Date(orderDate);
+   deliveryDate.setDate(deliveryDate.getDate() + x);
+   var daysRemaining = (deliveryDate - (new Date())) / (1000 * 60 * 60 * 24);
+   
+   if(daysRemaining < 0){
+		return "";
+   }
+   
+   return daysRemaining;
+}
+
+/**
+ * Gets the estimated date of delivery for a package
+ * @param {String} orderDate the time the package was ordered(e.g. "October 13, 2015 11:13:00")
+ * @param {String} shipSpeed the shipping speed the user chose (e.g. 2 [days])
+ * @return {String} the ETA (e.g. Oct 15, 2015)
+ */
+function getDeliveryDate(orderDate, shipSpeed) {
+   var deliveryDate = new Date(orderDate);
+   deliveryDate.setDate(deliveryDate.getDate() + shipSpeed);
+   var deliveryString = deliveryDate.toString();
+   return deliveryString.substring(4, 10) + ", " + deliveryString.substring(11, 15);
+}
+
+/**
+ * Gets the status of an order
+ * @param {String} orderDate the time the package was ordered(e.g. "October 13, 2015 11:13:00")
+ * @param {String} shipSpeed the shipping speed the user chose (e.g. 2 [days])
+ * @return {String} status (preparing for shipment, in-transit, delivered)
+ */
+function getOrderStatus(orderDate, shipSpeed) {
+   var orderDate = new Date(orderDate);
+   var systemDate = new Date();
+   var diff = systemDate - orderDate;
+   diff = shipSpeed - (diff / (1000 * 60 * 60 * 24));
+
+   if (shipSpeed - diff < 1) {
+      return "Preparing for shipment"
+   } else if (shipSpeed - diff < shipSpeed) {
+      return "In-transit"
+   } else {
+      return "Delivered"
+   }
+}
+	
     </script>
 </body>
 
