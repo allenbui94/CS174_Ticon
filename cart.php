@@ -1,10 +1,39 @@
 ﻿<?php
 
 session_start(); 
+require 'php/connection.php';
 if(!isset($_SESSION['CurrentUser'])){
 header('Location:index.php');
 } 
+$customerID = $_SESSION['CustomerID'];
+$productID = array();
+$price = array();
+$name = array();
+$category = array();
+$tagSpecific = array();
+$description = array();
 
+$sql = "select product.productID, product.price, product.name, product.category, product.tagSpecific, product.description from product join cart on product.productID = cart.productID where cart.customerID = '$customerID'";
+	$stmt = db2_prepare($conn, $sql);	
+
+	if ($stmt) {
+		$result = db2_execute($stmt);
+		
+		if (!$result)
+		{
+			echo "error";
+		}
+		while ($row = db2_fetch_array($stmt)) {
+   			array_push($productID, $row[0]);
+   			array_push($price, $row[1]);
+   			array_push($name, $row[2]);
+   			array_push($category, $row[3]);
+   			array_push($tagSpecific, $row[4]);
+			array_push($description, $row[4]);
+		}	
+		db2_close($conn);
+	}
+		
 ?>
 
 <!DOCTYPE html>
@@ -158,13 +187,14 @@ header('Location:index.php');
         // do a query to retrieve all the productIDs, etc from this user's cart and store them into arrays
         // Example of a cart with stuff in it after doing a query. Something like
         // "select cart.productID, product.name, product.price, product.description, product.category, product.tag specific from cart join product on product.productID=cart.productID where cart.ID = [whatever the logged in customer's ID is];"
-        var productIDs = [1000000001, 1000000002, 1000000009, 1000000010];
-        var prices = [19.99, 249.99, 219.99, 19.99];
-        var names = ["Volcom Frickin Chino Pants", "Michael Kors 1224 Suit", "Tommy Hilfiger Black Classic-Fit Tuxedo Suit", "John Ashford Long-Sleeve Herringbone Flannel Shirt"];
-        var categories = ["Pants", "Suit", "Suit", "Shirt"];
-        var tagSpecifics = ["Men's", "Men's", "Men's", "Men's"];
-        var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur";
-        createProductTable(productIDs, prices, names, categories, tagSpecifics); // pass the array(s) containing all the productIDs from the cart
+        var productIDs = <?php echo json_encode($productID); ?>//[1000000001, 1000000002, 1000000009, 1000000010];
+        var prices = <?php echo json_encode($price); ?>//[19.99, 249.99, 219.99, 19.99];
+        var names = <?php echo json_encode($name); ?>//["Volcom Frickin Chino Pants", "Michael Kors 1224 Suit", "Tommy Hilfiger Black Classic-Fit Tuxedo Suit", "John Ashford Long-Sleeve Herringbone Flannel Shirt"];
+        var categories = <?php echo json_encode($category); ?>//["Pants", "Suit", "Suit", "Shirt"];
+        var tagSpecifics = <?php echo json_encode($tagSpecific); ?>//["Men's", "Men's", "Men's", "Men's"];
+        var description = <?php echo json_encode($description); ?>//"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur";
+
+	   createProductTable(productIDs, prices, names, categories, tagSpecifics); // pass the array(s) containing all the productIDs from the cart
     });
 
     function createProductTable(productIDs, prices, names, categories, tagSpecifics) {
@@ -179,9 +209,9 @@ header('Location:index.php');
 		+ '0985175' + '</td></tr><tr><td>Category:</td><td>' 
 		+ categories[i] + '</td></tr><td>Product ID:</td><td>'
 		+ tagSpecifics[i] + '</table></td><td>'
-		+ '$' + prices[i] + '<br><div class="caption"><p><a href="#/" onclick="removeCartEntry(' 
+		+ '$' + parseFloat(Math.round(prices[i] * 100) / 100).toFixed(2) + '<br><div class="caption"><p><a href="#/" onclick="removeCartEntry(' 
 		+ productIDs[i] +',' + prices[i] + ');">Remove from cart</a></div></td></tr></tbody></table><br></div>';
-            cost = cost + prices[i];
+            cost = cost + parseFloat(prices[i]);
         }
         $('#productTable').html(html);
         $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
@@ -200,7 +230,7 @@ header('Location:index.php');
 	
         //FOR REMOVE CART ---> subtract from COST here... 
         tax = cost * .07;
-
+		
         var shippingCost = 0;
         var sNum = element.value;
         if (sNum == 1) {
@@ -216,7 +246,6 @@ header('Location:index.php');
 	    shippingCost = 0; 
 	    oldShippingCost = 0; 
 	}
-	
         // add the cost of shipping by grabbing the value the user chose
         $('#shipping').html('$' + parseFloat(shippingCost));
         $('#cartTax').html('$' + parseFloat(Math.round((shippingCost + tax) * 100) / 100).toFixed(2));
