@@ -1,16 +1,16 @@
 <?php
     include_once('connection.php');
 	
-    $firstName =$_POST['firstName'];
-    $lastName =$_POST['lastName'];
+    	$firstName =$_POST['firstName'];
+    	$lastName =$_POST['lastName'];
 	$street =$_POST['street'];
 	$city =$_POST['city'];
 	$state =$_POST['state'];
 	$zip =$_POST['zip'];
 	$country =$_POST['country'];
-    $email =$_POST['email'];
+    	$email =$_POST['email'];
 	$password =$_POST['password'];
-    $phone =$_POST['phone'];
+   	$phone =$_POST['phone'];
 	$id = 100000;
 	
 	$maxCustomerID = db2_execute("SELECT max(id) from customer");
