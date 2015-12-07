@@ -1,11 +1,13 @@
 ﻿<?php
 session_start();
+
 $database = "sample";
 $user = "";
 $pass = "";
 $conn = db2_connect($database, $user, $pass);
-$productID = $_GET['productID'];
-
+echo $_SESSION['CustomerID'];
+//$customerID = $_GET['CurrentUser'];
+//$_SESSION['CurrentUser'];
 $id = array();
 $name = array();
 $price = array();
@@ -13,9 +15,8 @@ $description = array();
 $category = array();
 $tagSpecific = array();
 
-if ($productID != "") {
-//echo $productID;	
-$sql = "SELECT name, price, description, category, tagSpecific FROM product WHERE productID = '" . $productID . "'";
+
+$sql = "SELECT name, price, description, category, tagSpecific FROM product";
 
 	$stmt = db2_prepare($conn, $sql);	
 
@@ -45,7 +46,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
 	else {
 		echo "error";
 	}
-}
+
 
 ?>
 
@@ -58,7 +59,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Shopping Cart</title>
+    <title>Order History</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts-->
