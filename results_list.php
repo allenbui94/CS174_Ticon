@@ -1,9 +1,6 @@
 <?php
 session_start(); 	
-$database = "sample";
-$user = "";
-$pass = "";
-$conn = db2_connect($database, $user, $pass);
+require 'php/connection.php';
 
 $category = $_GET['category'];
 $tagSpecific = $_GET['tagSpecific'];
@@ -89,15 +86,25 @@ $sql = "SELECT productID, name, price, description FROM product where category =
                         <a href="contact.html">Contact</a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav pull-right">
+               <ul class="nav navbar-nav pull-right">
+		
+		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
                     <li>
-                        <a href="login.html">Login/SignUp</a>
+                        <a href="login.php">Login/SignUp</a>
+                    </li> <?php } ?>
+		<?php if(isset($_SESSION['CurrentUser'])){?>
+		    <li>
+                        <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
                     </li>
-                    <li>
-                        <a href="cart.html">
+		    <li> 
+                        <a href="orderHistory.php">Order History</a> 
+                    </li>
+                    <li> 
+                        <a href="cart.php">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
-                        </a>
-                    </li>
+                        </a> 
+                    </li><?php } ?>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

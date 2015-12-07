@@ -59,6 +59,17 @@ session_start();
                         <a href="contact.html">Contact</a>
                     </li>
                 </ul>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="service.html">Services</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
                 <ul class="nav navbar-nav pull-right">
 		
 		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
@@ -69,11 +80,14 @@ session_start();
 		    <li>
                         <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
                     </li>
+		    <li> 
+                        <a href="orderHistory.php">Order History</a> 
+                    </li>
                     <li> 
                         <a href="cart.php">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
                         </a> 
-                    </li> <?php } ?>
+                    </li><?php } ?>
 
                 </ul>
             </div>
@@ -89,6 +103,7 @@ session_start();
         <div class="row">
             <div class="col-md-6">
 		<h5 class="errorMsg"><?php if(isset($_SESSION['ErrorMsgEmpty'])){ echo $_SESSION['ErrorMsgEmpty']; unset($_SESSION['ErrorMsgEmpty']);} else if(isset($_SESSION['failedLoginMsg'])){echo $_SESSION['failedLoginMsg']; unset($_SESSION['failedLoginMsg']);}?></h5>
+		<h5 class ="successReg"><?php if(isset($_SESSION['newUserMsg'])){ echo $_SESSION['newUserMsg']; unset($_SESSION['newUserMsg']);}?></h5>
                 <form class="form-horizontal" role="form" method="post" action="php/loginCheck.php">
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="email">Email:</label>

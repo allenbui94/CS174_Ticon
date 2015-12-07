@@ -38,7 +38,7 @@ header('Location:index.php');
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+            <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -61,31 +61,34 @@ header('Location:index.php');
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
-        
-        <?php if(!isset($_SESSION['CurrentUser'])){ ?>  
+		
+		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
                     <li>
                         <a href="login.php">Login/SignUp</a>
                     </li> <?php } ?>
-        <?php if(isset($_SESSION['CurrentUser'])){?>
-            <li>
+		<?php if(isset($_SESSION['CurrentUser'])){?>
+		    <li>
                         <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
+                    </li>
+		    <li> 
+                        <a href="orderHistory.php">Order History</a> 
                     </li>
                     <li> 
                         <a href="cart.php">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
                         </a> 
-                    </li> <?php } ?>
+                    </li><?php } ?>
 
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
-    </nav>    <!-- Page Content -->
-    <div class="container">
+    </nav>    <div class="container">
         <h2>Register</h2>
+	<h5 "errorMsg"><?php if(isset($_SESSION['failedRegMsg'])){echo $_SESSION['failedRegMsg']; unset($_SESSION['failedRegMsg']);}?></h5>
         <hr>
-        <form id="registerForm" action="signupValidate.php" method="POST">
+        <form id="registerForm" action="php/signupValidate.php" method="POST">
             <div class="form-group">
                 <div class="col-md-6">
                     <label for="InputName">First Name</label>

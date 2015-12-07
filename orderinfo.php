@@ -1,10 +1,7 @@
 ﻿<?php
 session_start();
 
-$database = "sample";
-$user = "";
-$pass = "";
-$conn = db2_connect($database, $user, $pass);
+require 'php/connection.php';
 
 $inputOrderID = $_GET['orderID'];
 $customerID = $_SESSION['CustomerID'];
@@ -163,11 +160,14 @@ $longitude = array();
 		    <li>
                         <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
                     </li>
+		    <li> 
+                        <a href="orderHistory.php">Order History</a> 
+                    </li>
                     <li> 
                         <a href="cart.php">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
                         </a> 
-                    </li> <?php } ?>
+                    </li><?php } ?>
 
                 </ul>
             </div>
