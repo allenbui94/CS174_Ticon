@@ -171,7 +171,8 @@ $_SESSION['shipSpeed'] = $shipping;
 						debug: false,
 						submitHandler: function(form) {
 							$.post('php/paymentValidate.php', $("#registerForm").serialize(), function(data) {
-								alert(data);
+								var opener = "orderHistory.php";
+								window.open(opener, "_self");
 								
 							});
 						}
