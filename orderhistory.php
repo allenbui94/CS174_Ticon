@@ -1,7 +1,57 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-​ ​
+﻿<?php
+session_start();
+$database = "sample";
+$user = "";
+$pass = "";
+$conn = db2_connect($database, $user, $pass);
+$productID = $_GET['productID'];
 
+$id = array();
+$name = array();
+$price = array();
+$description = array();
+$category = array();
+$tagSpecific = array();
+
+if ($productID != "") {
+//echo $productID;	
+$sql = "SELECT name, price, description, category, tagSpecific FROM product WHERE productID = '" . $productID . "'";
+
+	$stmt = db2_prepare($conn, $sql);	
+
+	if ($stmt) {
+		$result = db2_execute($stmt);
+		
+		if (!$result)
+		{
+			echo "error";
+		}
+		while ($row = db2_fetch_array($stmt)) {
+   			array_push($name, $row[0]);
+   			array_push($price, $row[1]);
+   			array_push($description, $row[2]);
+   			array_push($category, $row[3]);
+   			array_push($tagSpecific, $row[4]);
+		}	
+		/*
+		print_r($name);
+		print_r($price);
+		print_r($description);
+		print_r($category);
+		print_r($tagSpecific);*/
+		db2_close($conn);
+	}
+	
+	else {
+		echo "error";
+	}
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+​ 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -89,33 +139,14 @@
     <hr>
     <div class="container">
         <div class="row">
-            <div class="col-md-6"><b>Subtotal:</b></div>
-            <div id="cartSubTotal" class="col-md-6"></div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <select id="shippingOtions" class="form-control" style="width:60%;" onchange="calculateTotals(this);">
-                    <option selected disabled>Shipping Type</option>
-                    <option value="1">2 Day Express</option>
-                    <option value="2">5 Day Standard</option>
-                    <option value="3">Free</option>
-                </select>
-                <!--dropdown-->
-            </div>
-            <!-- col-->
-            <div id="shipping" class="col-md-6"></div>
-        </div>
-        <!--row-->
-        <br />
-        <div class="row">
-            <div class="col-md-6"><b>With Shipping & Tax:</b></div>
-            <div id="cartTax" class="col-md-6"></div>
-            <div class="col-md-6"><b>Total:</b></div>
-            <div id="cartTotal" class="col-md-6"></div>
+            
+          
         </div>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn pull-right btn-success" type="button" onclick="location.href='checkout.html';">Checkout</button>
+              
             </div>
         </div>
     </div>
@@ -154,61 +185,31 @@
     });
 
     function createProductTable(productIDs, prices, names, categories, tagSpecifics) {
+	//  
         var html = ""; // we append all our html stuff into here
         cost = 0; // creates a productTable for every item in the cart
         for (i = 0; i < productIDs.length; i++) {
         html += '<div class = "' + 
-		productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;"><center>'
-		+ names[i]
-		+ '</center></th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="'
-		+ 'clothing_pics/'+ productIDs[i]+'.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>'
-		+ '0985175' + '</td></tr><tr><td>Category:</td><td>' 
-		+ categories[i] + '</td></tr><td>Product ID:</td><td>'
+		productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;">Order #'
+		+ productIDs[i]
+		+ '</th><th style="40%;">Info</th><th>Total</th></tr></thead><tbody><tr><td></div></td><td><br><br><button class="btn btn-success" type="button" onclick="redirect('
+		+ productIDs[i] + ');">Order Details</button>  </td><td><table class="table"><tr><td>Date Ordered:</td><td>'
+		+ '0985175' + '</td></tr><tr><td>Ship To:</td><td>' 
+		+ categories[i] + '</td></tr><td>City:</td><td>'
 		+ tagSpecifics[i] + '</table></td><td>'
-		+ '$' + prices[i] + '<br><div class="caption"><p><a href="#/" onclick="removeCartEntry(' 
-		+ productIDs[i] +',' + prices[i] + ');">Remove from cart</a></div></td></tr></tbody></table><br></div>';
+		+ '$' + prices[i] + '<br><div class="caption"><p></div></td></tr></tbody></table><br></div>';
             cost = cost + prices[i];
         }
+		//<a href="#/" onclick="removeCartEntry(' 
+		//+ productIDs[i] +',' + prices[i] + ');">Remove from cart</a>
         $('#productTable').html(html);
         $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
     }
-
-    function calculateTotals(element) {
-        //FOR REMOVE CART ---> subtract from COST here... 
-        tax = cost * .07;
-
-        var shippingCost = 0;
-        var sNum = element.value;
-        if (sNum == 1) {
-            shippingCost = 5.95;
-            oldShippingCost = 5.95;
-        } else if (sNum == 2) {
-            shippingCost = 6.95;
-            oldShippingCost = 6.95;
-        }else if(sNum == 3){ 
-	    shippingCost = 0; 
-	    oldShippingCost = 0; 
+	
+	function redirect(orderID){
+		window.location.href = "order.php?orderID=" + orderID;
 	}
 	
-        // add the cost of shipping by grabbing the value the user chose
-        $('#shipping').html('$' + parseFloat(shippingCost));
-        $('#cartTax').html('$' + parseFloat(Math.round((shippingCost + tax) * 100) / 100).toFixed(2));
-        $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + shippingCost) * 100) / 100).toFixed(2));
-    }
-
-    function removeCartEntry(productID, price) {
-        var divID = "\.";
-
-        divID += productID;
-        $(divID).remove();
-        cost -= price;
-	tax = cost * .07;
-        $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
-        $('#cartTax').html('$' + parseFloat(Math.round((oldShippingCost + tax) * 100) / 100).toFixed(2));
-        $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + oldShippingCost) * 100) / 100).toFixed(2));
-
-        // make sure to delete the entry from the database as well
-    }
     </script>
 </body>
 
