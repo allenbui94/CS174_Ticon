@@ -43,9 +43,11 @@ if(isset($_POST['submit'])){
 		header('Location:../login.php');  
 	   }
 	   $numRows = 0;
-	   $customerName="";  
+	   $customerName="";
+	   $customerID = "";   
 	   while($row = db2_fetch_array($stmt)){
 		$numRows += 1;
+		 $customerID = $row[0];
 		 $customerName= $row[1]." ".$row[2]; 
 		 /* echo $row[0]. " ".$row[1]." ".$row[2];
 		 echo '<br>'; */ 
@@ -54,6 +56,7 @@ if(isset($_POST['submit'])){
 	   
 	   if($numRows == 1){
 		//echo 'true'; 
+		 $_SESSION['CustomerID'] = $customerID; 
 		 $_SESSION['CurrentUser'] = $customerName;
 		 $_SESSION['SuccessMsg'] = 'Welcome, '.$customerName.'. You have been successfully logged in!';
 		 header('Location:../index.php');
