@@ -184,7 +184,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
 		
 		document.title = pName;
 		document.getElementById("nameField").innerHTML = pName;
-		document.getElementById("priceField").innerHTML = pPrice;
+		document.getElementById("priceField").innerHTML = "$"+pPrice;
 		document.getElementById("descriptionField").innerHTML = pDescription;
 	 </script>
 </body>

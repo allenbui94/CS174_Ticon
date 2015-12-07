@@ -1,3 +1,4 @@
+DROP TABLE product;
 CREATE TABLE product(
     productID varchar(32),
     name varchar(64),
@@ -6,6 +7,7 @@ CREATE TABLE product(
     category varchar(32),
     tagSpecific varchar(32)
 );
+DROP TABLE customer;
 CREATE TABLE customer(
     id varchar(32),
     firstName varchar(32),
@@ -19,6 +21,7 @@ CREATE TABLE customer(
     password varchar(64),
     phoneNumber varchar(10)
 );
+DROP TABLE payment;
 CREATE TABLE payment(
     customerID varchar(32),
     cardNumber varchar(32),
@@ -27,6 +30,7 @@ CREATE TABLE payment(
     firstName varchar(32),
     lastName varchar(32)
 );
+DROP TABLE orderInfo;
 CREATE TABLE orderInfo(
     orderID varchar(32),
     customerID varchar(32),
@@ -37,16 +41,19 @@ CREATE TABLE orderInfo(
     tax varchar(32),
     orderTime varchar(32)
 );
+DROP TABLE orderedItems;
 CREATE TABLE orderedItems(
     orderID varchar(32),
     productID varchar(32)
 );
+DROP TABLE warehouse;
 CREATE TABLE warehouse(
     productID varchar(32),
     quantity varchar(32),
     longitude varchar(32),
     latitude varchar(32)
 );
+DROP TABLE cart;
 CREATE TABLE cart
 (
 	customerID varchar(32),
