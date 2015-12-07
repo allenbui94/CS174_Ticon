@@ -4,7 +4,7 @@ session_start();
 
 require 'php/connection.php';
 
-$productID = $_GET['productID'];
+$productID = $_GET['id'];
 
 $id = array();
 $name = array();
