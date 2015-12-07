@@ -1,7 +1,8 @@
 <?php
 session_start();
 require 'php/connection.php';
-
+$shipping = $_GET['shipping'];
+$_SESSION['shipSpeed'] = $shipping;
 ?>
 <!DOCTYPE html>
 <html lang="en">

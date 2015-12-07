@@ -127,7 +127,8 @@ header('Location:index.php');
         </div>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn pull-right btn-success" type="button" onclick="location.href='checkout.php';">Checkout</button>
+			<!--location.href='checkout.php';-->
+                <button id = "josh" class="btn pull-right btn-success" type="button" onclick="handleClick()">Checkout</button>
             </div>
         </div>
     </div>
@@ -152,6 +153,7 @@ header('Location:index.php');
     var cost = 0;
     var oldShippingCost = 0
     var tax = 0;
+	var shippingSpeed;
     $(document).ready(function() {
         // do a query to retrieve all the productIDs, etc from this user's cart and store them into arrays
         // Example of a cart with stuff in it after doing a query. Something like
@@ -184,20 +186,33 @@ header('Location:index.php');
         $('#productTable').html(html);
         $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
     }
+	
+	function handleClick(){
+	
+	//alert(shippingSpeed);
+	if(shippingSpeed != null){
+		var opener = "checkout.php?shipping=" + shippingSpeed;
+		window.open(opener, "_self");
+	}
+	}
 
     function calculateTotals(element) {
+	
         //FOR REMOVE CART ---> subtract from COST here... 
         tax = cost * .07;
 
         var shippingCost = 0;
         var sNum = element.value;
         if (sNum == 1) {
-            shippingCost = 5.95;
-            oldShippingCost = 5.95;
-        } else if (sNum == 2) {
+			shippingSpeed = 2;
             shippingCost = 6.95;
             oldShippingCost = 6.95;
+        } else if (sNum == 2) {
+		shippingSpeed = 5;
+            shippingCost = 5.95;
+            oldShippingCost = 5.95;
         }else if(sNum == 3){ 
+		shippingSpeed = 7;
 	    shippingCost = 0; 
 	    oldShippingCost = 0; 
 	}
