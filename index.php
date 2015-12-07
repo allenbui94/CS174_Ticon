@@ -163,13 +163,13 @@ $sql = "SELECT product.productID, name, price, description FROM product join war
                             </ol>
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                    <img class="slide-image" src="banners/banner_1_1.jpg" alt="">
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                    <img class="slide-image" src="banners/banner_2_1.jpg" alt="">
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                    <img class="slide-image" src="banners/banner_3.jpg" alt="">
                                 </div>
                             </div>
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
