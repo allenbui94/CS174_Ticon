@@ -153,7 +153,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
                         <h3><a href="#" id = "nameField"></a></h3>
 						<br>
                         <h4 id = "descriptionField"></h4>
-                        <p></p>
+                        <button type="button" id="add-button" class="btn btn-lg">Add to Cart</button>
                     </div>
                 </div>
             </div>
