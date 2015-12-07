@@ -132,19 +132,19 @@ $sql = "SELECT productID, name, price, description FROM product ORDER BY rand() 
                     <div class="list-group panel">
                        <a href="#mens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Men's</a>
                         <div class="collapse" id="mens">
-                       <a href="results_list.php?category=Shirt&tagSpecific=Men's" class="list-group-item">Shirts</a>
-                            <a href="results_list.php?category=Pants&tagSpecific=Men's" class="list-group-item">Pants</a>
-                            <a href="results_list.php?category=Suit&tagSpecific=Men's" class="list-group-item">Suits</a>
-							<a href="results_list.php?category=Jacket&tagSpecific=Men's" class="list-group-item">Jackets</a>							
-                            <a href="results_list.php?category=Shoes&tagSpecific=Men's" class="list-group-item">Shoes</a>
+                       <a href="results_list.php?category=Shirt&tagSpecific=Men''s" class="list-group-item">Shirts</a>
+                            <a href="results_list.php?category=Pants&tagSpecific=Men''s" class="list-group-item">Pants</a>
+                            <a href="results_list.php?category=Suit&tagSpecific=Men''s" class="list-group-item">Suits</a>
+							<a href="results_list.php?category=Jacket&tagSpecific=Men''s" class="list-group-item">Jackets</a>							
+                            <a href="results_list.php?category=Shoes&tagSpecific=Men''s" class="list-group-item">Shoes</a>
                         </div>
                         <a href="#womens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Women's</a>
                         <div class="collapse" id="womens">
-                            <a href="results_list.php?category=Shoes&tagSpecific=Women's" class="list-group-item">Shoes</a>	
-							<a href="results_list.php?category=Pants&tagSpecific=Women's" class="list-group-item">Pants</a>	
-                            <a href="results_list.php?category=Dress&tagSpecific=Women's" class="list-group-item">Dresses</a>	
-							<a href="results_list.php?category=Sweater&tagSpecific=Women's" class="list-group-item">Sweaters</a>	
-							<a href="results_list.php?category=Jacket&tagSpecific=Women's" class="list-group-item">Jackets</a>	
+                            <a href="results_list.php?category=Shoes&tagSpecific=Women''s" class="list-group-item">Shoes</a>	
+							<a href="results_list.php?category=Pants&tagSpecific=Women''s" class="list-group-item">Pants</a>	
+                            <a href="results_list.php?category=Dress&tagSpecific=Women''s" class="list-group-item">Dresses</a>	
+							<a href="results_list.php?category=Sweater&tagSpecific=Women''s" class="list-group-item">Sweaters</a>	
+							<a href="results_list.php?category=Jacket&tagSpecific=Women''s" class="list-group-item">Jackets</a>	
                         </div>
                     </div>
                 </div>
