@@ -1,3 +1,43 @@
+<?php
+session_start(); 	
+$database = "sample";
+$user = "";
+$pass = "";
+$conn = db2_connect($database, $user, $pass);
+
+$category = $_GET['category'];
+$tagSpecific = $_GET['tagSpecific'];
+
+$id = array();
+$name = array();
+$price = array();
+$description = array();
+$productID = array();
+
+$sql = "SELECT productID, name, price, description FROM product where category = '" . $category . "' and tagSpecific = '" . $tagSpecific ."'";
+
+	$stmt = db2_prepare($conn, $sql);	
+
+	if ($stmt) {
+		$result = db2_execute($stmt);
+		
+		if (!$result)
+		{
+			echo "error";
+		}
+		while ($row = db2_fetch_array($stmt)) {
+   			array_push($productID, $row[0]);
+   			array_push($name, $row[1]);
+   			array_push($price, $row[2]);
+   			array_push($description, $row[3]);
+		}	
+		db2_close($conn);
+	}
+	
+	else {
+		echo "error";
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +74,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand lead2" href="index.html"> T </a>
+                <a class="navbar-brand lead2" href="index.php"> T </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -73,19 +113,19 @@
                     <div class="list-group panel">
                         <a href="#mens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Men's</a>
                         <div class="collapse" id="mens">
-							<a href="results_list.php?category=Shirt&tagSpecific=Men's" class="list-group-item">Shirts</a>
-                            <a href="results_list.php?category=Pants&tagSpecific=Men's" class="list-group-item">Pants</a>
-                            <a href="results_list.php?category=Suit&tagSpecific=Men's" class="list-group-item">Suits</a>
-							<a href="results_list.php?category=Jacket&tagSpecific=Men's" class="list-group-item">Jackets</a>							
-                            <a href="results_list.php?category=Shoes&tagSpecific=Men's" class="list-group-item">Shoes</a>
+							<a href="results_list.php?category=Shirt&tagSpecific=Men''s" class="list-group-item">Shirts</a>
+                            <a href="results_list.php?category=Pants&tagSpecific=Men''s" class="list-group-item">Pants</a>
+                            <a href="results_list.php?category=Suit&tagSpecific=Men''s" class="list-group-item">Suits</a>
+							<a href="results_list.php?category=Jacket&tagSpecific=Men''s" class="list-group-item">Jackets</a>							
+                            <a href="results_list.php?category=Shoes&tagSpecific=Men''s" class="list-group-item">Shoes</a>
                         </div>
                         <a href="#womens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Women's</a>
                         <div class="collapse" id="womens">
-                            <a href="results_list.php?category=Shoes&tagSpecific=Women's" class="list-group-item">Shoes</a>	
-							<a href="results_list.php?category=Pants&tagSpecific=Women's" class="list-group-item">Pants</a>	
-                            <a href="results_list.php?category=Dress&tagSpecific=Women's" class="list-group-item">Dresses</a>	
-							<a href="results_list.php?category=Sweater&tagSpecific=Women's" class="list-group-item">Sweaters</a>	
-							<a href="results_list.php?category=Jacket&tagSpecific=Women's" class="list-group-item">Jackets</a>	
+                            <a href="results_list.php?category=Shoes&tagSpecific=Women''s" class="list-group-item">Shoes</a>	
+							<a href="results_list.php?category=Pants&tagSpecific=Women''s" class="list-group-item">Pants</a>	
+                            <a href="results_list.php?category=Dress&tagSpecific=Women''s" class="list-group-item">Dresses</a>	
+							<a href="results_list.php?category=Sweater&tagSpecific=Women''s" class="list-group-item">Sweaters</a>	
+							<a href="results_list.php?category=Jacket&tagSpecific=Women''s" class="list-group-item">Jackets</a>	
                         </div>
                     </div>
                 </div>
@@ -125,10 +165,10 @@
             // do a query to retrieve whatever category the user clicked on
             // For example, if the user clicked on Mens > Pants, a query to get that info could be
             // "SELECT productID, name, price, description FROM product where category="Pants" and tagSpecific="Men's""
-            var productIDs = [1000000010, 1000000020, 1000000030, 1000000040, 1000000050, 1000000060];
-            var prices = [19.99, 159.99, 12.99, 48.99, 89.99, 29.99];
-            var names = ["John Ashford Long-Sleeve Herringbone Flannel Shirt", "London Fog Big & Tall Classic Car Coat", "St. John's Bay Long-Sleeve Solid Sueded Polo", "Levi's 514 Straight-Fit Jeans, Caraway Twill", "a.n.a Long-Sleeve Sweater Dress", "St. John's Bay Wool-Blend Pea Coat"];
-            var descriptions = ["A subtle herringbone pattern adds a textural feel to this button-down shirt from John Ashford.", "Brave the outdoors in this polished overcoat from Kenneth Cole Reaction, designed with a slim fit and knit collar.", "This polo's soft color and cushiony sueded fabric gives you an easy-going style that feels instantly worn in.", "When blue denim won't do, enhance any casual look with these twill jeans from Levi's.", "Our oversized sweater dress features textural knit details and a draped cowl neckline for a soft and cozy take on a new season essential.", "The warm fleece of our Columbia zip-front jacket keeps you cozy and comfortable during all your outdoor adventures."];
+            var productIDs = <?php echo json_encode($productID); ?>;//[1000000010, 1000000020, 1000000030, 1000000040, 1000000050, 1000000060];
+            var prices = <?php echo json_encode($price); ?>;//[19.99, 159.99, 12.99, 48.99, 89.99, 29.99];
+            var names = <?php echo json_encode($name); ?>;//["John Ashford Long-Sleeve Herringbone Flannel Shirt", "London Fog Big & Tall Classic Car Coat", "St. John's Bay Long-Sleeve Solid Sueded Polo", "Levi's 514 Straight-Fit Jeans, Caraway Twill", "a.n.a Long-Sleeve Sweater Dress", "St. John's Bay Wool-Blend Pea Coat"];
+            var descriptions = <?php echo json_encode($description); ?>;//["A subtle herringbone pattern adds a textural feel to this button-down shirt from John Ashford.", "Brave the outdoors in this polished overcoat from Kenneth Cole Reaction, designed with a slim fit and knit collar.", "This polo's soft color and cushiony sueded fabric gives you an easy-going style that feels instantly worn in.", "When blue denim won't do, enhance any casual look with these twill jeans from Levi's.", "Our oversized sweater dress features textural knit details and a draped cowl neckline for a soft and cozy take on a new season essential.", "The warm fleece of our Columbia zip-front jacket keeps you cozy and comfortable during all your outdoor adventures."];
             createProductTable(productIDs, prices, names, descriptions); // pass the array(s) containing all the productIDs from the cart
         });
 
