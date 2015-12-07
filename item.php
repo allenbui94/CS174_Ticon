@@ -84,7 +84,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand lead2" href="index.html"> T </a>
+                <a class="navbar-brand lead2" href="index.php"> T </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
