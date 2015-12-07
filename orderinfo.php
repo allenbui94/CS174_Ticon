@@ -65,8 +65,9 @@ $longitude = array();
 				array_push($price, $row[3]);	
 				array_push($category, $row[4]);	
 				array_push($tagSpecific, $row[5]);	
+				
 		}	}
-		
+
 		$stmt = db2_prepare($conn, $sql3);	
 		if ($stmt) {
 		$result = db2_execute($stmt);
@@ -217,7 +218,7 @@ $orderTime = array();
 $itemCost = array();
 $firstName = array();
 $city = array();*/
-        
+       
         var productIDs =  <?php echo json_encode($productID); ?>;//[1000000001, 1000000002, 1000000009, 1000000010];
         var prices =  <?php echo json_encode($price); ?>;//[19.99, 249.99, 219.99, 19.99];
         var names =  <?php echo json_encode($name); ?>;//["Volcom Frickin Chino Pants", "Michael Kors 1224 Suit", "Tommy Hilfiger Black Classic-Fit Tuxedo Suit", "John Ashford Long-Sleeve Herringbone Flannel Shirt"];
@@ -238,7 +239,7 @@ $city = array();*/
 		var states = <?php echo json_encode($state); ?>;
 		var zips = <?php echo json_encode($zip); ?>;
 		var countries = <?php echo json_encode($country); ?>;
-		
+		 console.log(productIDs);
 		// lmao i don't even care if this is a trillion parameters at this point
 		createOrderInfoTable(orderIDs, orderTimes, itemCosts, firstNames, cities, shippingTypes, latitudes, longitudes, streets, states, zips, countries);
 		createProductTable(productIDs, prices, names, categories, tagSpecifics); 
@@ -496,12 +497,16 @@ console.log(orderDate);
    var deliveryDate = new Date(orderDate);
    deliveryDate.setDate(deliveryDate.getDate() + x);
    var daysRemaining = (deliveryDate - (new Date())) / (1000 * 60 * 60 * 24);
+   daysRemaining = daysRemaining.toFixed(0);
+  // console.log(daysRemaining);
    
    if(daysRemaining < 0){
 		return "Already Delivered";
+   }else if(daysRemaining < 1){
+		return daysRemaining + " day";
    }
    
-   return daysRemaining;
+   return daysRemaining + " days";
 }
 
 /**
