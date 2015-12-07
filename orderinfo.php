@@ -5,7 +5,7 @@ $database = "sample";
 $user = "";
 $pass = "";
 $conn = db2_connect($database, $user, $pass);
-echo $_SESSION['CustomerID'];
+//echo $_SESSION['CurrentUser'];
 //$customerID = $_GET['CurrentUser'];
 //$_SESSION['CurrentUser'];
 $id = array();
@@ -34,13 +34,13 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product";
    			array_push($category, $row[3]);
    			array_push($tagSpecific, $row[4]);
 		}	
-		/*
-		print_r($name);
-		print_r($price);
+		
+		//print_r($name);
+		/*print_r($price);
 		print_r($description);
 		print_r($category);
-		print_r($tagSpecific);*/
-		db2_close($conn);
+		print_r($tagSpecific);
+		db2_close($conn);*/
 	}
 	
 	else {
@@ -52,14 +52,15 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product";
 
 <!DOCTYPE html>
 <html lang="en">
-​ 
+​ ​
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Order History</title>
+    <title>Order Info</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts-->
@@ -129,28 +130,20 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product";
     </nav>
 
     <div class="container">
-        <h2>Order History</h2>
+        <h2>Order Info</h2>
         <hr>
         <br>
     </div>
     <!-- Page Content -->
+	
+	<div id="orderInfoTable" class="container"></div>
+	<center><h2>Items Purchased</h2></center>
+	<hr>
     <div id="productTable" class="container">
     </div>
     ​
     <hr>
-    <div class="container">
-        <div class="row">
-        </div>
-        <div class="row">
-            
-          
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-              
-            </div>
-        </div>
-    </div>
+    
     <!-- /.container -->
     <div class="container">
         <hr>
@@ -169,9 +162,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product";
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
-    var cost = 0;
-    var oldShippingCost = 0
-    var tax = 0;
+
     $(document).ready(function() {
         // do a query to retrieve all the productIDs, etc from this user's cart and store them into arrays
         // Example of a cart with stuff in it after doing a query. Something like
@@ -181,36 +172,80 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product";
         var names = ["Volcom Frickin Chino Pants", "Michael Kors 1224 Suit", "Tommy Hilfiger Black Classic-Fit Tuxedo Suit", "John Ashford Long-Sleeve Herringbone Flannel Shirt"];
         var categories = ["Pants", "Suit", "Suit", "Shirt"];
         var tagSpecifics = ["Men's", "Men's", "Men's", "Men's"];
-        var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur";
-        createProductTable(productIDs, prices, names, categories, tagSpecifics); // pass the array(s) containing all the productIDs from the cart
+        //var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur";
+        
+		
+		createOrderInfoTable(productIDs, prices, names, categories, tagSpecifics);
+		createProductTable(productIDs, prices, names, categories, tagSpecifics); // pass the array(s) containing all the productIDs from the cart
     });
 
-    function createProductTable(productIDs, prices, names, categories, tagSpecifics) {
-	//  
-        var html = ""; // we append all our html stuff into here
-        cost = 0; // creates a productTable for every item in the cart
-        for (i = 0; i < productIDs.length; i++) {
-        html += '<div class = "' + 
-		productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;">Order #'
-		+ productIDs[i]
-		+ '</th><th style="40%;">Info</th><th>Total</th></tr></thead><tbody><tr><td></div></td><td><br><br><button class="btn btn-success" type="button" onclick="redirect('
-		+ productIDs[i] + ');">Order Details</button>  </td><td><table class="table"><tr><td>Date Ordered:</td><td>'
-		+ '0985175' + '</td></tr><tr><td>Ship To:</td><td>' 
-		+ categories[i] + '</td></tr><td>City:</td><td>'
-		+ tagSpecifics[i] + '</table></td><td>'
-		+ '$' + prices[i] + '<br><div class="caption"><p></div></td></tr></tbody></table><br></div>';
-            cost = cost + prices[i];
-        }
-		//<a href="#/" onclick="removeCartEntry(' 
-		//+ productIDs[i] +',' + prices[i] + ');">Remove from cart</a>
-        $('#productTable').html(html);
-        $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
-    }
-	
-	function redirect(orderID){
-		window.location.href = "orderinfo.php?orderID=" + orderID;
+	function createOrderInfoTable(productIDs, prices, names, categories, tagSpecifics){
+		var html = '<div class = "' + 
+		productIDs[0] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;">Order #'
+		+ productIDs[0]
+		+ '</th><th style="40%;">Tracking Info</th><th>Total</th></tr></thead><tbody><tr><td></div></td><td><br><br></td><td><table class="table"><tr><td>Date Ordered:</td><td>'
+		+ '0985175' + '</td></tr><tr><td>Status:</td><td>' 
+		+ categories[0] + '</td></tr><td>Destination:</td><td>'
+		+ tagSpecifics[0] + '</td></tr><td>Current Location</td><td>'
+		+ tagSpecifics[0] + '</td></tr><td>ETA:</td><td>'
+		+ tagSpecifics[0] +'</table></td><td>'
+		+ '$' + prices[0] + '<br><div class="caption"><p></div></td></tr></tbody></table><br></div>';
+		$('#orderInfoTable').html(html);
 	}
 	
+    function createProductTable(productIDs, prices, names, categories, tagSpecifics) {
+        var html = ""; // we append all our html stuff into here  
+        for (i = 0; i < productIDs.length; i++) {    
+        html += '<div class = "' + 
+		productIDs[i] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;"><center>'
+		+ names[i]
+		+ '</center></th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="'
+		+ 'clothing_pics/'+ productIDs[i]+'.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>'
+		+ '0985175' + '</td></tr><tr><td>Category:</td><td>' 
+		+ categories[i] + '</td></tr><td>Product ID:</td><td>'
+		+ tagSpecifics[i] + '</table></td><td>'
+		+ '$' + prices[i] + '<br><div class="caption"><p></div></td></tr></tbody></table><br></div>';  
+        }
+        $('#productTable').html(html);
+       
+    }
+
+    function calculateTotals(element) {
+        //FOR REMOVE CART ---> subtract from COST here... 
+        tax = cost * .07;
+
+        var shippingCost = 0;
+        var sNum = element.value;
+        if (sNum == 1) {
+            shippingCost = 5.95;
+            oldShippingCost = 5.95;
+        } else if (sNum == 2) {
+            shippingCost = 6.95;
+            oldShippingCost = 6.95;
+        }else if(sNum == 3){ 
+	    shippingCost = 0; 
+	    oldShippingCost = 0; 
+	}
+	
+        // add the cost of shipping by grabbing the value the user chose
+        $('#shipping').html('$' + parseFloat(shippingCost));
+        $('#cartTax').html('$' + parseFloat(Math.round((shippingCost + tax) * 100) / 100).toFixed(2));
+        $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + shippingCost) * 100) / 100).toFixed(2));
+    }
+
+    function removeCartEntry(productID, price) {
+        var divID = "\.";
+
+        divID += productID;
+        $(divID).remove();
+        cost -= price;
+	tax = cost * .07;
+        $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
+        $('#cartTax').html('$' + parseFloat(Math.round((oldShippingCost + tax) * 100) / 100).toFixed(2));
+        $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + oldShippingCost) * 100) / 100).toFixed(2));
+
+        // make sure to delete the entry from the database as well
+    }
     </script>
 </body>
 
