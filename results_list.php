@@ -191,7 +191,7 @@ $sql = "SELECT productID, name, price, description FROM product where category =
 
             for (i = 0; i < productIDs.length; i++) {
                 html += '<div class="col-sm-4 col-lg-4 col-md-4" style="width:30%;"><div class="thumbnail"><img src="clothing_pics/' +
-                    productIDs[i] + '.jpg" alt=""><center><h4><a href="item.php?id=' +
+                    productIDs[i] + '.jpg" alt=""><center><h4><a href="item.php?productID=' +
                     productIDs[i] + '">' +
                     names[i] + '</a></h4><div class="caption"><h4>$' +
                     prices[i] + '</h4>' +

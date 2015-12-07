@@ -4,7 +4,7 @@ session_start();
 
 require 'php/connection.php';
 
-$productID = $_GET['id'];
+$productID = $_GET['productID'];
 
 $id = array();
 $name = array();
@@ -100,17 +100,6 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
                         <a href="contact.html">Contact</a>
                     </li>
                 </ul>
-                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="service.html">Services</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
-                    </li>
-                </ul>
                 <ul class="nav navbar-nav pull-right">
 		
 		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
@@ -143,17 +132,21 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
                 <p class="lead">Ticon</p>
                 <div id="SideBar">
                     <div class="list-group panel">
-                        <a href="#mens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Mens</a>
+                       <a href="#mens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Men's</a>
                         <div class="collapse" id="mens">
-                            <a href="" class="list-group-item">Pants</a>
-                            <a href="" class="list-group-item">Shirts</a>
-                            <a href="" class="list-group-item">Shoes</a>
+							<a href="results_list.php?category=Shirt&tagSpecific=Men''s" class="list-group-item">Shirts</a>
+                            <a href="results_list.php?category=Pants&tagSpecific=Men''s" class="list-group-item">Pants</a>
+                            <a href="results_list.php?category=Suit&tagSpecific=Men''s" class="list-group-item">Suits</a>
+							<a href="results_list.php?category=Jacket&tagSpecific=Men''s" class="list-group-item">Jackets</a>							
+                            <a href="results_list.php?category=Shoes&tagSpecific=Men''s" class="list-group-item">Shoes</a>
                         </div>
-                        <a href="#womens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Womens</a>
+                        <a href="#womens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Women's</a>
                         <div class="collapse" id="womens">
-                            <a href="" class="list-group-item">Shirts</a>
-                            <a href="" class="list-group-item">Pants</a>
-                            <a href="" class="list-group-item">Dresses</a>
+                            <a href="results_list.php?category=Shoes&tagSpecific=Women''s" class="list-group-item">Shoes</a>	
+							<a href="results_list.php?category=Pants&tagSpecific=Women''s" class="list-group-item">Pants</a>	
+                            <a href="results_list.php?category=Dress&tagSpecific=Women''s" class="list-group-item">Dresses</a>	
+							<a href="results_list.php?category=Sweater&tagSpecific=Women''s" class="list-group-item">Sweaters</a>	
+							<a href="results_list.php?category=Jacket&tagSpecific=Women''s" class="list-group-item">Jackets</a>	
                         </div>
                     </div>
                 </div>
