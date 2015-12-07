@@ -1,9 +1,9 @@
 <?php
+
 session_start();
-$database = "sample";
-$user = "";
-$pass = "";
-$conn = db2_connect($database, $user, $pass);
+
+require 'php/connection.php';
+
 $productID = $_GET['productID'];
 
 $id = array();
@@ -100,7 +100,18 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
                         <a href="contact.html">Contact</a>
                     </li>
                 </ul>
-                 <ul class="nav navbar-nav pull-right">
+                 <ul class="nav navbar-nav">
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="service.html">Services</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
 		
 		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
                     <li>
@@ -110,11 +121,14 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
 		    <li>
                         <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
                     </li>
+		    <li> 
+                        <a href="orderHistory.php">Order History</a> 
+                    </li>
                     <li> 
                         <a href="cart.php">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
                         </a> 
-                    </li> <?php } ?>
+                    </li><?php } ?>
 
                 </ul>
             </div>

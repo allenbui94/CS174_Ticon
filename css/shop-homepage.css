@@ -28,12 +28,12 @@ body {
 
 .success{ 
 
-   color:white;
-   background-color:#009999;
-   text-shadow:2px 2px #666666;	
+   color:#005580;
+   background-color:#B3E6FF;
+   text-align:center;
+   letter-spacing:1px;		
    padding: 10px;
    font-style:italic;
-   text-transform:uppercase;
 }  
 
 

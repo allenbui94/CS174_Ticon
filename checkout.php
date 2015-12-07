@@ -33,11 +33,13 @@ header('Location:login.php');
 </head>
 
 <body>
+
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+            <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -60,20 +62,23 @@ header('Location:login.php');
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
-        
-        <?php if(!isset($_SESSION['CurrentUser'])){ ?>  
+		
+		<?php if(!isset($_SESSION['CurrentUser'])){ ?>	
                     <li>
                         <a href="login.php">Login/SignUp</a>
                     </li> <?php } ?>
-        <?php if(isset($_SESSION['CurrentUser'])){?>
-            <li>
+		<?php if(isset($_SESSION['CurrentUser'])){?>
+		    <li>
                         <a href="php/logout.php"><?php echo $_SESSION['CurrentUser']." (logout)"?></a>
+                    </li>
+		    <li> 
+                        <a href="orderHistory.php">Order History</a> 
                     </li>
                     <li> 
                         <a href="cart.php">
                             <img src="http://findicons.com/files/icons/1700/2d/512/cart.png" alt="cartImage" style="width:20px; height=20px;">
                         </a> 
-                    </li> <?php } ?>
+                    </li><?php } ?>
 
                 </ul>
             </div>
@@ -81,6 +86,7 @@ header('Location:login.php');
         </div>
         <!-- /.container -->
     </nav>
+
     <!-- Page Content -->
     <div class="container">
         <h2>Enter Payment Information</h2>
