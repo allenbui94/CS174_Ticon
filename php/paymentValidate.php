@@ -95,6 +95,12 @@ if ($stmt) {
 	$sql7 = "insert into orderInfo values('$orderID','$customerID','$total','$subtotal','$shipping','$shippingCost','$tax','$today')";
 	$stmt = db2_prepare($conn, $sql7);	
 	$result = db2_execute($stmt);
+	
+	$sql8 = "delete from cart where customerID = '$customerID'";
+	$stmt = db2_prepare($conn, $sql8);	
+	$result = db2_execute($stmt);
+	
+	
 }
 
 ?>
