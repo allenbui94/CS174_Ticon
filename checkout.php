@@ -1,12 +1,8 @@
 <?php
-
-session_start(); 
-if(!isset($_SESSION['CurrentUser'])){
-header('Location:index.php');
-} 
+session_start();
+require 'php/connection.php';
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -142,7 +138,7 @@ header('Location:index.php');
             <div class="row">
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="submit" name="submit" id="submit" value="Pay Now" class="btn btn-success pull-right">
+                        <input type="submit" name="submit" id="submit" value="Pay Now" onclick="validatePayment()" class="btn btn-success pull-right">
                     </div>
                 </div>
             </div>
@@ -164,7 +160,25 @@ header('Location:index.php');
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+	<script>
+	function validatePayment() {
+				$(document).ready(function(){
+					$("#registerForm").validate({
+						debug: false,
+						submitHandler: function(form) {
+							$.post('php/paymentValidate.php', $("#registerForm").serialize(), function(data) {
+								alert(data);
+								
+							});
+						}
+					});
+				});
+			}
+		
+	</script>
 </body>
 
 </html>
