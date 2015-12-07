@@ -23,12 +23,22 @@ $price = array();
 $category = array();
 $tagSpecific = array();
 
+$street = array();
+$state = array();
+$zip = array();
+$country = array();
+
+$latitude = array();
+$longitude = array();
+
 
 	//$sql = "select orderInfo.orderID, orderInfo.orderTime, orderInfo.itemCost, customer.firstName, customer.city from customer join orderInfo on orderInfo.customerID = customer.id where orderInfo.customerID = '" . $customerID ."'";
-	$sql = "select orderInfo.orderID, orderInfo.orderTime, orderInfo.itemCost, customer.firstName, customer.city, orderInfo.shippingType from customer join orderInfo on orderInfo.customerID = customer.id where orderInfo.customerID = '" . $customerID ."' and orderInfo.orderID = '". $inputOrderID ."'";
+	$sql = "select orderInfo.orderID, orderInfo.orderTime, orderInfo.itemCost, customer.firstName, customer.city, orderInfo.shippingType, customer.street, customer.sta, customer.zip, customer.country from customer join orderInfo on orderInfo.customerID = customer.id where orderInfo.customerID = '" . $customerID ."' and orderInfo.orderID = '". $inputOrderID ."'";
 	$stmt = db2_prepare($conn, $sql);	
 	$sql2 = "select orderedItems.orderID, orderedItems.productID, product.name, product.price, product.category, product.tagSpecific from orderedItems join orderInfo on orderInfo.orderID = orderedItems.orderID join product on orderedItems.productID = product.productID where orderInfo.orderID = '" .$inputOrderID."'";
+	$sql3 = "select warehouse.latitude, warehouse.longitude from warehouse join orderedItems on orderedItems.productID = warehouse.productID where orderID = '". $inputOrderID ."'";
 
+	//echo $inputOrderID;
 	if ($stmt) {
 		$result = db2_execute($stmt);
 		
@@ -43,6 +53,10 @@ $tagSpecific = array();
    			array_push($firstName, $row[3]);
    			array_push($city, $row[4]);
 			array_push($shippingType, $row[5]);
+			array_push($street, $row[6]);
+			array_push($state, $row[7]);
+			array_push($zip, $row[8]);
+			array_push($country, $row[9]);
 		}	
 		
 		$stmt = db2_prepare($conn, $sql2);	
@@ -54,7 +68,17 @@ $tagSpecific = array();
 				array_push($price, $row[3]);	
 				array_push($category, $row[4]);	
 				array_push($tagSpecific, $row[5]);	
-		}	
+		}	}
+		
+		$stmt = db2_prepare($conn, $sql3);	
+		if ($stmt) {
+		$result = db2_execute($stmt);
+			while ($row = db2_fetch_array($stmt)) {	
+				array_push($latitude, $row[0]);
+				array_push($longitude, $row[1]);
+				//array_push($latitude, $row[0]);	
+				//array_push($longitude, $row[1]);		
+		}
 		}
 		//print_r($shippingType);
 		/*
@@ -184,6 +208,7 @@ $tagSpecific = array();
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
     <script type="text/javascript">
 
     $(document).ready(function() {
@@ -205,12 +230,39 @@ $city = array();*/
 		var firstNames = <?php echo json_encode($firstName); ?>;
 		var cities = <?php echo json_encode($city); ?>;
 		var shippingTypes = <?php echo json_encode($shippingType); ?>;
-		//console.log(shippingTypes);
-		createOrderInfoTable(orderIDs, orderTimes, itemCosts, firstNames, cities, shippingTypes);
-		createProductTable(productIDs, prices, names, categories, tagSpecifics); // pass the array(s) containing all the productIDs from the cart
+		
+		var latitudes = <?php echo json_encode($latitude); ?>;
+		var longitudes = <?php echo json_encode($longitude); ?>;
+		
+		var streets = <?php echo json_encode($street); ?>;
+		var states = <?php echo json_encode($state); ?>;
+		var zips = <?php echo json_encode($zip); ?>;
+		var countries = <?php echo json_encode($country); ?>;
+		
+		// lmao i don't even care if this is a trillion parameters at this point
+		createOrderInfoTable(orderIDs, orderTimes, itemCosts, firstNames, cities, shippingTypes, latitudes, longitudes, streets, states, zips, countries);
+		createProductTable(productIDs, prices, names, categories, tagSpecifics); 
+		
+		var addr = streets[0] + ", " + cities[0] + ", " + states[0] + " " + zips[0] + " " +countries[0];
+		var lat = parseFloat(latitudes[0]);
+		var lon = parseFloat(longitudes[0]);		
+		var point = new google.maps.Point(lat, lon);
+		
+		getPackageLoc(point, "", shippingTypes[0], orderTimes[0], shippingTypes[0]);
     });
 
-	function createOrderInfoTable(orderIDs, orderTimes, itemCosts, firstNames, cities, shippingTypes){
+	function createOrderInfoTable(orderIDs, orderTimes, itemCosts, firstNames, cities, shippingTypes, latitudes, longitudes, streets, states, zips, countries){
+		var lat = parseFloat(latitudes[0]);
+		var lon = parseFloat(longitudes[0]);
+		var addr = streets[0] + ", " + cities[0] + ", " + states[0] + " " + zips[0] + " " +countries[0];		
+		
+		var point = new google.maps.Point(lat, lon, orderTimes[0], shippingTypes[0]);
+		
+		// CHANGE BACK getLocation(addr, point, orderTimes[0], shippingTypes[0]);
+		getLocation(addr, point, orderTimes[0], shippingTypes[0]);
+		//var location = getPackageLoc(point, "", orderTimes[0], shippingTypes[0]);
+		//
+		
 		var totalTemp = parseFloat(itemCosts[0]);
 		totalTemp = Math.round(totalTemp * 100) / 100;
 	
@@ -218,13 +270,19 @@ $city = array();*/
 		orderIDs[0] + '"><table class="table"><thead><tr><th colspan="2" style="width:30%;">Order #'
 		+ orderIDs[0]
 		+ '</th><th style="40%;">Tracking Info</th><th>Total</th></tr></thead><tbody><tr><td></div></td><td><br><br></td><td><table class="table"><tr><td>Date Ordered:</td><td>'
-		+ orderTimes[0] + '</td></tr><tr><td>Status:</td><td>' 
+		+ orderTimes[0]
+		+'</td></tr><tr><td>Shipping Speed:</td><td>' 
+		+ shippingTypes[0] + " Day Shipping"+ '</td></tr><tr><td>Status:</td><td>' 
 		+ getOrderStatus(orderTimes[0], shippingTypes[0]) + '</td></tr><td>Destination:</td><td>'
-		+ cities[0] + '</td></tr><td>Current Location</td><td>'
-		+ "CURRENT LOCATION" + '</td></tr><td>ETA:</td><td>'
+		+ cities[0] + '</td></tr><td>Current Location:</td><td><p id = "loc">'
+		+ "" + '</p></td></tr><td>ETA:</td><td>'
 		+ getDaysLeft(orderTimes[0], shippingTypes[0]) +'</table></td><td>'
 		+ '$' + parseFloat(Math.round(totalTemp * 100) / 100).toFixed(2) + '<br><div class="caption"><p></div></td></tr></tbody></table><br></div>';
 		$('#orderInfoTable').html(html);
+		//var location = getPackageLoc(point, point2, orderTimes[0], shippingTypes[0]);
+		/*
+		var tempPoint3 = new google.maps.Point(37.774929, -122.419416); // somewhere in San Francisco
+		console.log(getPackageLoc(tempPoint, tempPoint3, "November 30, 2015 12:40:00", 5));*/
 	}
 	
     function createProductTable(productIDs, prices, names, categories, tagSpecifics) {
@@ -273,7 +331,8 @@ $city = array();*/
  * @param {String} formattedAddress (e.g. "1 Washington Sq, San Jose, CA 95192")
  * @return {google.maps.Point} the point (e.g. {x: 37.3351424, y: -121.88127580000003})
  */
-function getLocation(formattedAddress) {
+function getLocation(formattedAddress, point2, orderTime, shippingType) {
+//addr, point, orderTimes[0], shippingTypes[0]
    var geocoder = new google.maps.Geocoder();
    geocoder.geocode({
       'address': formattedAddress
@@ -282,9 +341,68 @@ function getLocation(formattedAddress) {
          var latitude = results[0].geometry.location.lat();
          var longitude = results[0].geometry.location.lng();
          var point = new google.maps.Point(latitude, longitude);
+		 var orderStatus = getOrderStatus(orderTime, shippingType);
+   if (orderStatus == "Preparing for shipment") {
+     var geocoder = new google.maps.Geocoder();;
+   var latlng = new google.maps.LatLng(point2.y, point2.x);
+   console.log(point2.y + "  " + point2.x);
+   
+   geocoder.geocode({
+      'latLng': latlng
+   }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+         if (results[1]) {
+            for (var i = 0; i < results[0].address_components.length; i++) {
+               for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+                  if (results[0].address_components[i].types[b] == "locality") {
+                     city = results[0].address_components[i];
+                     break;
+                  }
+               }
+            }       
+			document.getElementById("loc").innerHTML = city.long_name;
+            console.log(city.long_name);
+            // alert(city.long_name)
+            // need to return city.long_name somehow
+         }
+      }
+   });
+  
+      return "getPackageLoc - preparing for shipment";
+   } else if (orderStatus == "Delivered") {
+	   var geocoder = new google.maps.Geocoder();;
+   var latlng = new google.maps.LatLng(point.x, point.y);
+   geocoder.geocode({
+      'latLng': latlng
+   }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+         if (results[1]) {
+            for (var i = 0; i < results[0].address_components.length; i++) {
+               for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+                  if (results[0].address_components[i].types[b] == "locality") {
+                     city = results[0].address_components[i];
+                     break;
+                  }
+               }
+            }       
+			document.getElementById("loc").innerHTML = city.long_name;
+            console.log(city.long_name);
+            // alert(city.long_name)
+            // need to return city.long_name somehow
+         }
+      }
+   });
+  
+      return "getPackageLoc - delivered";
+   } else {
+		document.getElementById("loc").innerHTML = "It's somewhere.";
+      return "getPackageLoc - in transit";
+		 
+		 }
 
-         console.log(point);
-         alert(point);
+		 document.getElementById("loc").innerHTML = point;
+         console.log("From getLoc() " + point);
+         //alert(point);
          // need to return point somehow
       }
    });
@@ -299,8 +417,8 @@ function getLocation(formattedAddress) {
  * @return {String} the city of which the package is currently in (e.g. "San Jose")
  */
 function getPackageLoc(start, end, orderDate, shipSpeed) {
-   var orderStatus = getOrderStatus(orderDate, shipSpeed);
 
+   var orderStatus = getOrderStatus(orderDate, shipSpeed);
    if (orderStatus == "Preparing for shipment") {
       getCityName(start);
       return "getPackageLoc - preparing";
@@ -340,6 +458,7 @@ function getPackageLoc(start, end, orderDate, shipSpeed) {
  * @return {String} the city of loc (e.g. "San Jose")
  */
 function getCityName(loc) {
+
    var geocoder = new google.maps.Geocoder();;
    var latlng = new google.maps.LatLng(loc.x, loc.y);
 
@@ -379,7 +498,7 @@ console.log(orderDate);
    var daysRemaining = (deliveryDate - (new Date())) / (1000 * 60 * 60 * 24);
    
    if(daysRemaining < 0){
-		return "";
+		return "Already Delivered";
    }
    
    return daysRemaining;
@@ -420,6 +539,8 @@ function getOrderStatus(orderDate, shipSpeed) {
 }
 	
     </script>
+<script type="text/javascript">
+</script>
 </body>
 
 </html>
