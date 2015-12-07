@@ -1,8 +1,8 @@
 <?php
 
 session_start(); 
-if(!isset($_SESSION['CurrentUser']){
-header('Location:login.php');
+if(!isset($_SESSION['CurrentUser'])){
+header('Location:index.php');
 } 
 
 ?>
@@ -142,7 +142,7 @@ header('Location:login.php');
             <div class="row">
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="submit" name="submit" id="submit" value="PayNow" class="btn btn-success pull-right">
+                        <input type="submit" name="submit" id="submit" value="Pay Now" class="btn btn-success pull-right">
                     </div>
                 </div>
             </div>

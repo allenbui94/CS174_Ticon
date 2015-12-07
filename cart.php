@@ -127,7 +127,7 @@ header('Location:index.php');
         </div>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn pull-right btn-success" type="button" onclick="location.href='checkout.html';">Checkout</button>
+                <button class="btn pull-right btn-success" type="button" onclick="location.href='checkout.php';">Checkout</button>
             </div>
         </div>
     </div>

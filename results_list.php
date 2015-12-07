@@ -11,7 +11,7 @@ $price = array();
 $description = array();
 $productID = array();
 
-$sql = "SELECT productID, name, price, description FROM product where category = '" . $category . "' and tagSpecific = '" . $tagSpecific ."'";
+$sql = "SELECT product.productID, name, price, description FROM product join warehouse on warehouse.productID=product.productID where category = '" . $category . "' and tagSpecific = '" . $tagSpecific ."' and warehouse.quantity != '0'";
 
 	$stmt = db2_prepare($conn, $sql);	
 

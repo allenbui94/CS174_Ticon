@@ -12,7 +12,7 @@ $productID = array();
 
 //echo $productID;	
 //
-$sql = "SELECT productID, name, price, description FROM product ORDER BY rand() fetch first 6 rows only";
+$sql = "SELECT product.productID, name, price, description FROM product join warehouse on warehouse.productID=product.productID where warehouse.quantity != '0' ORDER BY rand() fetch first 6 rows only";
 
 	$stmt = db2_prepare($conn, $sql);	
 
