@@ -1,24 +1,17 @@
 <?php
-
 session_start();
-
 require 'php/connection.php';
-
 $productID = $_GET['productID'];
-
 $id = array();
 $name = array();
 $price = array();
 $description = array();
 $category = array();
 $tagSpecific = array();
-
 if ($productID != "") {
 //echo $productID;	
 $sql = "SELECT name, price, description, category, tagSpecific FROM product WHERE productID = '" . $productID . "'";
-
 	$stmt = db2_prepare($conn, $sql);	
-
 	if ($stmt) {
 		$result = db2_execute($stmt);
 		
@@ -46,7 +39,6 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
 		echo "error";
 	}
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +152,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
                         <h3><a href="#" id = "nameField"></a></h3>
 						<br>
                         <h4 id = "descriptionField"></h4>
-                        <button type="button" id="add-button" class="btn btn-lg" onClick="addToCart();" >Add to Cart</button>
+                        <button type="button" id="add-button" class="btn btn-lg">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -190,7 +182,6 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
 		var pDescription = <?php echo json_encode($description); ?>;
 		var pID = <?php echo json_encode($productID); ?>;
 		var picSrc = "clothing_pics/" + pID + ".jpg";
-
 		var img = document.getElementById("productPicture");
 		img.src = picSrc;
 		
@@ -201,24 +192,6 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
 		document.getElementById("nameField").innerHTML = pName;
 		document.getElementById("priceField").innerHTML = "$"+pPrice;
 		document.getElementById("descriptionField").innerHTML = pDescription;
-		
-		function addToCart(){
-			<?php
-			$customerID = $_SESSION['CustomerID'];
-			$sql = "insert into cart (customerID, productID) values ('" . $customerID . "','" . $productID . "')"; 
-			
-			$stmt = db2_prepare($conn,$sql);
-			
-			if($stmt){
-				$result = db2_execute($stmt);
-				if($result){ 
-				$_SESSION['addedToCartMsg'] = 'Item added to your cart!';
-			}
-			else{
-				$_SESSION['failedAddedToCartMsg'] = 'Item failed to add to your cart!';
-			}
-			?>
-		}
 	 </script>
 </body>
 
