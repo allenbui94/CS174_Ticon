@@ -1,9 +1,7 @@
 <?php
 session_start();
 $database = "sample";
-$user = "";
-$pass = "";
-$conn = db2_connect($database, $user, $pass);
+require 'connection.php';
 $customerID = $_SESSION['CustomerID'];
 
 if (isset($_GET['productID'])) {
