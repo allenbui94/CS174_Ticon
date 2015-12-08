@@ -192,6 +192,11 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
 		document.getElementById("nameField").innerHTML = pName;
 		document.getElementById("priceField").innerHTML = "$"+pPrice;
 		document.getElementById("descriptionField").innerHTML = pDescription;
+        document.getElementById("add-button").addEventListener("click", function(){
+            $.ajax({
+                url: "php/addItem.php?productID="+pID
+            });
+        });
 	 </script>
 </body>
 
