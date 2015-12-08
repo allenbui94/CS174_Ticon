@@ -223,10 +223,10 @@ $sql = "select product.productID, product.price, product.name, product.category,
 	function handleClick(){
 	
 	//alert(shippingSpeed);
-	if(shippingSpeed != null){
-		var opener = "checkout.php?shipping=" + shippingSpeed;
-		window.open(opener, "_self");
-	}
+		if(shippingSpeed != null){
+			var opener = "checkout.php?shipping=" + shippingSpeed;
+			window.open(opener, "_self");
+		}
 	}
 
     function calculateTotals(element) {

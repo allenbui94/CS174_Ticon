@@ -1,12 +1,15 @@
 <?php
 session_start();
-$database = "sample";
 require 'connection.php';
-$customerID = $_SESSION['CustomerID'];
+//include '../cart.php';
+//echo $testvar;
 
-if (isset($_GET['productID'])) {
-	$query = "INSERT INTO cart (" + $customerID + "," + $_GET['productID'] + ")";
-	$stmt = db2_prepare($conn, $query);
-	$result = db2_execute($stmt);
-}
+$customerID = $_SESSION['CustomerID'];	
+$productID = $_GET['productID'];
+
+$sql = "insert into cart values('$customerID', '$productID')";
+$stmt = db2_prepare($conn, $sql);	
+$result = db2_execute($stmt);
+
+header("Location: ../cart.php");
 ?>
