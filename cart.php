@@ -128,6 +128,7 @@ $sql = "select product.productID, product.price, product.name, product.category,
     </div>
     ​
     <hr>
+	<form id = "reisterForm"></form>
     <div class="container">
         <div class="row">
             <div class="col-md-6"><b>Subtotal:</b></div>
@@ -177,6 +178,8 @@ $sql = "select product.productID, product.price, product.name, product.category,
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
     var cost = 0;
@@ -254,17 +257,22 @@ $sql = "select product.productID, product.price, product.name, product.category,
 
     function removeCartEntry(productID, price) {
         var divID = "\.";
-
         divID += productID;
+		divID += ":first";
         $(divID).remove();
         cost -= price;
-	tax = cost * .07;
+		tax = cost * .07;
         $('#cartSubTotal').html('$' + parseFloat(Math.round(cost * 100) / 100).toFixed(2));
         $('#cartTax').html('$' + parseFloat(Math.round((oldShippingCost + tax) * 100) / 100).toFixed(2));
         $('#cartTotal').html('$' + parseFloat(Math.round((cost + tax + oldShippingCost) * 100) / 100).toFixed(2));
 
+		location.href = 'php/cartRemoval.php?productID='+productID;
+				
+		
         // make sure to delete the entry from the database as well
     }
+	
+	
     </script>
 </body>
 
