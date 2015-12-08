@@ -1,7 +1,7 @@
 <?php
 $database = "SAMPLE";
-$user = "db2admin";
-$pass = "admin";
+$user = "";
+$pass = "";
 $conn = db2_connect($database, $user, $pass);
 $_SESSION["connection"] = $conn;
 ?>
