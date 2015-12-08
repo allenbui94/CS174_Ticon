@@ -85,13 +85,7 @@ $sql = "SELECT product.productID, name, price, description FROM product join war
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="service.html">Services</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="about.php">About</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
@@ -316,7 +310,7 @@ $sql = "SELECT product.productID, name, price, description FROM product join war
 		var html = "";
 		
 		for(i = 0; i < productIDs.length; i++){
-			html += '<div class="col-sm-4 col-lg-4 col-md-4" style="width:40%"><div class="thumbnail"><img src="clothing_pics/' +
+			html += '<div class="col-md-6 col-md-6 .center" style="width:40%; "><div class="thumbnail"><img src="clothing_pics/' +
 			productIDs[i] + '.jpg" alt=""><div class="caption"><center><h4><a href="item.php?productID=' +
 			productIDs[i] + '">' + 
 			names[i] + '</a></h4><h4>$' + 

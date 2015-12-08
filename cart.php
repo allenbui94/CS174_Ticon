@@ -83,13 +83,7 @@ $sql = "select product.productID, product.price, product.name, product.category,
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="service.html">Services</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="about.php">About</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">

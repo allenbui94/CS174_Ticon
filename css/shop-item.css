@@ -6,11 +6,18 @@
 
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    font-family:Calibri;
 }
 
-.thumbnail img {
-    width: 100%;
-}
+.productPicture{
+   width:auto;;
+   height: auto;
+
+} 
+
+.pName{ 
+  font-family: Calibri; 
+} 
 
 .ratings {
     padding-right: 10px;
@@ -19,7 +26,7 @@ body {
 }
 
 .thumbnail {
-    padding: 0;
+    padding:0px;	
 }
 
 .thumbnail .caption-full {
@@ -27,10 +34,29 @@ body {
     color: #333;
 }
 
+#add-button:hover{
+    background-color:#333;
+    color:white;        
+
+}
 .list-group-item-info{ 
     color:#003d66;
-    background-color:#f2f2f2; 
+    background-color:#E6E6E6;
+    text-transform:uppercase;
 }
+
+
+.lead{ 
+
+    font-family: 'Lobster', cursive;
+    font-size: 55px;    
+} 
+
+.lead2{ 
+    font-family: 'Lobster', cursive;
+    font-size:18px;
+    font-weight:bold; 
+} 
 
 
 footer {

@@ -56,7 +56,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <!-- Custom CSS -->
     <link href="css/shop-item.css" rel="stylesheet">
-    <link href="css/shop-homepage.css" rel="stylesheet">
+    <!--<link href="css/shop-homepage.css" rel="stylesheet">-->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -83,13 +83,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="service.html">Services</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="about.php">About</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
@@ -124,7 +118,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
                 <p class="lead">Ticon</p>
                 <div id="SideBar">
                     <div class="list-group panel">
-                       <a href="#mens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Men's</a>
+                       <a href="#mens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">MEN'S</a>
                         <div class="collapse" id="mens">
 							<a href="results_list.php?category=Shirt&tagSpecific=Men''s" class="list-group-item">Shirts</a>
                             <a href="results_list.php?category=Pants&tagSpecific=Men''s" class="list-group-item">Pants</a>
@@ -132,7 +126,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
 							<a href="results_list.php?category=Jacket&tagSpecific=Men''s" class="list-group-item">Jackets</a>							
                             <a href="results_list.php?category=Shoes&tagSpecific=Men''s" class="list-group-item">Shoes</a>
                         </div>
-                        <a href="#womens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">Women's</a>
+                        <a href="#womens" class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#SideBar">WOMEN'S</a>
                         <div class="collapse" id="womens">
                             <a href="results_list.php?category=Shoes&tagSpecific=Women''s" class="list-group-item">Shoes</a>	
 							<a href="results_list.php?category=Pants&tagSpecific=Women''s" class="list-group-item">Pants</a>	
@@ -147,11 +141,12 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
             <div class="col-md-9">
                 <div class="thumbnail">
                     <img id = "productPicture" src="" alt="">
+                    <hr>
                     <div class="caption-full">
                         <h3 class="pull-right" id = "priceField"></h3>
-                        <h3><a href="#" id = "nameField"></a></h3>
+                        <h3 class ="pName"><a href="#" id = "nameField"></a></h3>
 						<br>
-                        <h4 id = "descriptionField"></h4>
+                        <h4 id = "descriptionField"></h4><br> <hr>
                         <button type="button" id="add-button" class="btn btn-lg">Add to Cart</button>
                     </div>
                 </div>
@@ -184,10 +179,7 @@ $sql = "SELECT name, price, description, category, tagSpecific FROM product WHER
 		var picSrc = "clothing_pics/" + pID + ".jpg";
 		var img = document.getElementById("productPicture");
 		img.src = picSrc;
-		
-		img.style.height = '100%';
-		img.style.width = '100%';
-		
+
 		document.title = pName;
 		document.getElementById("nameField").innerHTML = pName;
 		document.getElementById("priceField").innerHTML = "$"+pPrice;

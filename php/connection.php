@@ -1,5 +1,5 @@
 <?php
-$database = "SAMPLE";
+$database = "";
 $user = "";
 $pass = "";
 $conn = db2_connect($database, $user, $pass);

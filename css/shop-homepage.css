@@ -6,9 +6,17 @@
 
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    font-family:Calibri;
 }
 
+.center{ 
 
+   margin:auto;
+   width: 60%;
+   padding:10px;
+
+
+}
 
 .slide-image {
     width: 100%;
@@ -24,7 +32,7 @@ body {
 }
 
 .caption {
-    height: 200px;	
+    height: 200px; 	
     overflow: hidden;
 }
 
@@ -70,7 +78,7 @@ body {
 }
 
 .list-group-item-info{ 
-
+    color:#003d66;
     background-color:#E6E6E6;
     text-transform:uppercase;
 }

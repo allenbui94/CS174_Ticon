@@ -1,8 +1,45 @@
-<?php 
+<?php
 
-session_start();
+session_start(); 	
 
-?> 
+require 'php/connection.php';
+
+$id = array();
+$name = array();
+$price = array();
+$description = array();
+$productID = array();
+
+//echo $productID;	
+//
+$sql = "SELECT product.productID, name, price, description FROM product join warehouse on warehouse.productID=product.productID where warehouse.quantity != '0' ORDER BY rand() fetch first 6 rows only";
+
+	$stmt = db2_prepare($conn, $sql);	
+
+	if ($stmt) {
+		$result = db2_execute($stmt);
+		
+		if (!$result)
+		{
+			echo "error";
+		}
+		while ($row = db2_fetch_array($stmt)) {
+   			array_push($productID, $row[0]);
+   			array_push($name, $row[1]);
+   			array_push($price, $row[2]);
+   			array_push($description, $row[3]);
+		}	
+		
+		db2_close($conn);
+	}
+	
+	else {
+		echo "error";
+	}
+
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,13 +50,12 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Sign In</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <title>Ticon-Home Page</title>
     <!-- Google Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/login.css" rel="stylesheet">
     <link href="css/shop-homepage.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,7 +63,6 @@ session_start();
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
@@ -78,52 +113,29 @@ session_start();
         </div>
         <!-- /.container -->
     </nav>
-    <!-- Page Content -->
+ <!-- Page Content -->
     <div class="container">
-        <h2>Existing Customers</h2>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-		<h5 class="errorMsg"><?php if(isset($_SESSION['ErrorMsgEmpty'])){ echo $_SESSION['ErrorMsgEmpty']; unset($_SESSION['ErrorMsgEmpty']);} else if(isset($_SESSION['failedLoginMsg'])){echo $_SESSION['failedLoginMsg']; unset($_SESSION['failedLoginMsg']);}?></h5>
-		<h5 class ="successReg"><?php if(isset($_SESSION['newUserMsg'])){ echo $_SESSION['newUserMsg']; unset($_SESSION['newUserMsg']);}?></h5>
-                <form class="form-horizontal" role="form" method="post" action="php/loginCheck.php">
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">Email:</label>
-                        <div class="col-sm-10">
-                            <input type="email" name = "email" class="form-control" id="email" placeholder="Enter email">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="pwd">Password:</label>
-                        <div class="col-sm-10">
-                            <input type="password" name = "pwd" class="form-control" id="pwd" placeholder="Enter password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-2 col-sm-10">
-                            <button type="submit" name ="submit" id="submit" class="btn btn-success">Sign In</button>
-                        </div>
-                    </div>
-                </form> <!---form--->
-            </div>
-            <!--col -->
-            <div class="col-md-6">
-                <div class="newCustomers">
-                    <h4> New Customer?</h4>
-                    <a class="btn btn-primary" href="signup.php">Register!</a>
-                </div>
-            </div>
-        </div>
-        <!-- row -->
-    </div>
+    	<div class ="row">
+    		<div class ="col-md-3">
+				<img src = "https://www.cs.sjsu.edu/~fbutt/frankpic3.jpg" class="img-rounded"  alt="">
+			</div>
+
+			<div class ="col-md-9">
+				<h3>Who are we?</h3>
+				<br>
+				<p>-A Butt Brands Boutique</p>
+			</div>
+			
+		</div>
+	</div>
+    
     <!-- /.container -->
     <div class="container">
         <hr>
         <!-- Footer -->
         <footer>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-12">
                     <p>Copyright &copy; Ticon 2015</p>
                 </div>
             </div>
