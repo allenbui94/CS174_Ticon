@@ -155,7 +155,7 @@ header('Location:index.php');
                 <div class="col-lg-12">
                     <label for="InputCity">State</label>
                     <div class="input-group">
-                        <input type="text" name="state" class="form-control" id="state" placeholder="Enter Full State Name" required>
+                        <input type="text" name="state" class="form-control" id="state" placeholder="Enter State (e.g. CA)" required>
                         <span class="input-group-addon"></span>
                     </div>
                     <br>

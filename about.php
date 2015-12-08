@@ -121,9 +121,11 @@ $sql = "SELECT product.productID, name, price, description FROM product join war
 			</div>
 
 			<div class ="col-md-9">
-				<h3>Who are we?</h3>
+				<h3>What is Ticon?</h3>
 				<br>
-				<p>-A Butt Brands Boutique</p>
+				<h4>A Butt Brands&trade; Boutique, sponsored by IBM&reg;</h4>
+				<p>Powered by DB2&reg;, the database of choice for robust, enterprise-wide solutions handling high-volume workloads. It is optimized to deliver industry-leading performance while lowering costs. DB2 database software offers industry leading performance, scale, and reliability on your choice of platform from Linux, UNIX and Windows to z/OS. Learn how customers are transforming their data center with DB2.</p>
+				<a href="http://www-01.ibm.com/software/data/db2/">Learn more >></a>
 			</div>
 			
 		</div>

@@ -134,7 +134,7 @@ $sql = "select product.productID, product.price, product.name, product.category,
                     <option selected disabled>Shipping Type</option>
                     <option value="1">2 Day Express</option>
                     <option value="2">5 Day Standard</option>
-                    <option value="3">Free</option>
+                    <option value="3">Free 7 Day</option>
                 </select>
                 <!--dropdown-->
             </div>
@@ -144,7 +144,7 @@ $sql = "select product.productID, product.price, product.name, product.category,
         <!--row-->
         <br />
         <div class="row">
-            <div class="col-md-6"><b>With Shipping & Tax:</b></div>
+            <div class="col-md-6"><b>Shipping & Tax:</b></div>
             <div id="cartTax" class="col-md-6"></div>
             <div class="col-md-6"><b>Total:</b></div>
             <div id="cartTotal" class="col-md-6"></div>
@@ -204,7 +204,7 @@ $sql = "select product.productID, product.price, product.name, product.category,
 		+ names[i]
 		+ '</center></th><th style="40%;">Details</th><th>Price</th></tr></thead><tbody><tr><td><div class="thumbnail"><img class="img-responsive" src="'
 		+ 'clothing_pics/'+ productIDs[i]+'.jpg' + '"alt=""style="width:330px; height=150px;"></div></td><td> </td><td><table class="table"><tr><td>Product ID:</td><td>'
-		+ '0985175' + '</td></tr><tr><td>Category:</td><td>' 
+		+ productIDs[i] + '</td></tr><tr><td>Category:</td><td>' 
 		+ categories[i] + '</td></tr><td>Product ID:</td><td>'
 		+ tagSpecifics[i] + '</table></td><td>'
 		+ '$' + parseFloat(Math.round(prices[i] * 100) / 100).toFixed(2) + '<br><div class="caption"><p><a href="#/" onclick="removeCartEntry(' 
