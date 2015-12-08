@@ -186,6 +186,7 @@ $sql = "select product.productID, product.price, product.name, product.category,
     var oldShippingCost = 0
     var tax = 0;
 	var shippingSpeed;
+	var size = 0;
     $(document).ready(function() {
         // do a query to retrieve all the productIDs, etc from this user's cart and store them into arrays
         // Example of a cart with stuff in it after doing a query. Something like
@@ -196,7 +197,7 @@ $sql = "select product.productID, product.price, product.name, product.category,
         var categories = <?php echo json_encode($category); ?>//["Pants", "Suit", "Suit", "Shirt"];
         var tagSpecifics = <?php echo json_encode($tagSpecific); ?>//["Men's", "Men's", "Men's", "Men's"];
         var description = <?php echo json_encode($description); ?>//"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur";
-
+		size = productIDs.length;
 	   createProductTable(productIDs, prices, names, categories, tagSpecifics); // pass the array(s) containing all the productIDs from the cart
     });
 
@@ -221,11 +222,11 @@ $sql = "select product.productID, product.price, product.name, product.category,
     }
 	
 	function handleClick(){
-	
-	//alert(shippingSpeed);
-		if(shippingSpeed != null){
-			var opener = "checkout.php?shipping=" + shippingSpeed;
-			window.open(opener, "_self");
+		if(size > 0){
+			if(shippingSpeed != null){
+				var opener = "checkout.php?shipping=" + shippingSpeed;
+				window.open(opener, "_self");
+			}
 		}
 	}
 
