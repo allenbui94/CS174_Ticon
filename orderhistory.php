@@ -2,7 +2,9 @@
 session_start();
 
 require 'php/connection.php';
-
+if(!isset($_SESSION['CurrentUser'])){
+header('Location:index.php');
+} 
 $customerID = $_SESSION['CustomerID'];
 //$_SESSION['CurrentUser'];
 $id = array();
